@@ -1,4 +1,11 @@
-import { StyleSheet, View, FlatList, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 
 import React, { useState, useEffect } from "react";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
@@ -10,7 +17,7 @@ import { AddButton, BackButton } from "../components/Inputs";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import SearchModal from "../modal-screen/SearchModal";
 
-const Category = ({
+const ContainerSubRoutes = ({
   getRoute,
   add,
   title,
@@ -27,19 +34,29 @@ const Category = ({
 
   const getApiData = async () => {
     const res = await getData(getRoute);
-    setData(res);
+    return setData(res);
   };
 
   useEffect(() => {
-    getApiData();
-    setInputFilter("");
-  }, [isFocused, updateAfterDelete]);
+    if (isFocused === true) {
+      getApiData();
+      setInputFilter("");
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
+    if (updateAfterDelete !== true) {
+      setData([]);
+      setInputFilter("");
+      getApiData();
+    }
+  }, [updateAfterDelete]);
 
   const renderItem = (item) => {
     let searchLoweCase = "";
 
     if (search === "providerId") {
-     searchLoweCase = JSON.stringify(item.provider.name).toLowerCase();
+      searchLoweCase = JSON.stringify(item.provider.name).toLowerCase();
     } else {
       searchLoweCase = JSON.stringify(item[search]).toLowerCase();
     }
@@ -90,16 +107,31 @@ const Category = ({
           <AddButton HandleEvent={() => navigation.navigate(add)} />
         </View>
       </View>
-      <FlatList
-        keyExtractor={(item) => JSON.stringify(item.id)}
-        data={data}
-        renderItem={(item) => renderItem(item.item)}
-      />
+
+      {data.length > 0 ? (
+        <FlatList
+          keyExtractor={(item) => JSON.stringify(item.id)}
+          data={data}
+          renderItem={(item) => renderItem(item.item)}
+        />
+      ) : data?.isEmpity === true ? (
+        <Text
+          style={{
+            color: "#CF2F2A",
+            fontSize: 20,
+            textAlign: "center",
+          }}
+        >
+          No se han encontrado registros
+        </Text>
+      ) : (
+        <ActivityIndicator color="#fff" size="large" />
+      )}
     </Layout>
   );
 };
 
-export default Category;
+export default ContainerSubRoutes;
 
 const styles = StyleSheet.create({
   header: {

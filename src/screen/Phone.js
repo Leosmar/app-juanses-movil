@@ -63,6 +63,8 @@ const Phone = () => {
         getRoute="get-phone"
         title="Telefonos"
         ListItem={ListItem}
+        updateAfterDelete={updateAfterDelete}
+        search="model"
       ></ContainerSubRoutes>
     </>
   );

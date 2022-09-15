@@ -70,6 +70,7 @@ const BuyProducts = () => {
         title="Pedidos"
         ListItem={ListItem}
         search="providerId"
+        updateAfterDelete={updateAfterDelete}
       ></ContainerSubRoutes>
     </>
   );

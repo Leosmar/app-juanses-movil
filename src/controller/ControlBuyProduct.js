@@ -1,21 +1,18 @@
 import { StyleSheet, View, Alert, Text, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 import { getData, register, update } from "../api";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
-import {
-  Input,
-  SubmitButton,
-  BackButton,
-  ModalMultiSelect,
-} from "../components/Inputs";
+import { Input, SubmitButton, BackButton } from "../components/Inputs";
+import MultiSelectModal from "../modal-screen/MultiSelectModal";
 import Title from "../components/Title";
 
 const ControlBuyProduct = ({ route }) => {
-  const params = route.params;
+  const params = route.params || null;
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const [isVisibleProvider, setIsVisibleProvider] = useState(false);
   const [isVisibleCategory, setIsVisibleCategory] = useState(false);
@@ -55,21 +52,29 @@ const ControlBuyProduct = ({ route }) => {
 
   const getDataMultiSelect = async () => {
     const resProvider = await getData("get-provider");
-    const filterProvider = resProvider.map((e) => {
-      return { id: e.id, name: e.name };
-    });
-    setProviderMultiSelect(filterProvider);
+    if (resProvider?.isEmpity !== true) {
+      const filterProvider = resProvider.map((e) => {
+        return { id: e.id, name: e.name };
+      });
+      setProviderMultiSelect(filterProvider);
+    }
+    if (resProvider?.isEmpity === true) {
+      setProviderMultiSelect(resProvider);
+    }
 
     const resCategory = await getData("get-category");
-    const filterCategory = resCategory.map((e) => {
-      return { id: e.id, name: e.typeProduct };
-    });
-    setCategoryMultiSelect(filterCategory);
+    if (resCategory?.isEmpity !== true) {
+      const filterCategory = resCategory.map((e) => {
+        return { id: e.id, name: e.typeProduct };
+      });
+      setCategoryMultiSelect(filterCategory);
+    }
+    if (resCategory?.isEmpity === true) {
+      setCategoryMultiSelect(resCategory);
+    }
   };
 
   useEffect(() => {
-    getDataMultiSelect();
-
     if (params) {
       setId(params.id);
       setProviderId(params.providerId);
@@ -86,6 +91,14 @@ const ControlBuyProduct = ({ route }) => {
       cleanInputs();
     }
   }, [params]);
+
+  useEffect(() => {
+    if (isFocused === true) {
+      getDataMultiSelect();
+      setIsVisibleProvider(false);
+      setIsVisibleCategory(false);
+    }
+  }, [isFocused]);
 
   const handleSubmit = async () => {
     if (
@@ -144,7 +157,7 @@ const ControlBuyProduct = ({ route }) => {
           <Title>{params ? "Editar" : "Registrar"} pedido</Title>
         </View>
 
-       <ModalMultiSelect
+        <MultiSelectModal
           isVisible={isVisibleProvider}
           setIsVisible={setIsVisibleProvider}
           event={setProviderId}
@@ -152,9 +165,13 @@ const ControlBuyProduct = ({ route }) => {
           text="Proveedores *"
           inputText={inputTextProvider}
           setInputText={setInputTextProvider}
+          ifItemEmpity={{
+            text: "proveedor",
+            addRoute: "Control-provider",
+          }}
         />
 
-        <ModalMultiSelect
+        <MultiSelectModal
           isVisible={isVisibleCategory}
           setIsVisible={setIsVisibleCategory}
           event={setCategoryId}
@@ -162,6 +179,10 @@ const ControlBuyProduct = ({ route }) => {
           text="Categorias *"
           inputText={inputTextCategory}
           setInputText={setInputTextCategory}
+          ifItemEmpity={{
+            text: "categoria",
+            addRoute: "Control-category",
+          }}
         />
 
         <Input

@@ -1,3 +1,3 @@
-import {createContext} from "react";
+import { createContext } from "react";
 
-export const UserContext = createContext({status: null, rol: null});
+export const UserContext = createContext({ status: null, rol: null });

@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { Alert } from "react-native";
 
 const staticPath = "192.168.100.96";
 const defaulPath = "10.0.2.2";
 
-const url = `http://${staticPath}:3000/api/`;
+const url =
+  `http://${staticPath}:3000/api/` ||
+  "https://api-juanses-movil-production.up.railway.app/api/";
 
 export const login = async (endPoint, data) => {
   try {
@@ -55,7 +58,6 @@ export const register = async (endPoint, data, comment) => {
       };
 
     let json = await res.json();
-
 
     if (json.error === "false") {
       Alert.alert(`${comment} registrado correctamente`);
@@ -114,9 +116,14 @@ export const getData = async (endPoint) => {
       };
 
     let json = await res.json();
-
     if (json.error === "false") {
-      return json.data;
+
+      if (json.data.length < 1) {
+        return { isEmpity: true };
+     
+      } else {
+        return json.data;
+      }
     } else {
       Alert.alert(`Error: ${json.message}`);
       return json.error;
@@ -150,7 +157,6 @@ export const getDataById = async (endPoint, id) => {
     return 0;
   }
 };
-
 
 export const deleteData = async (endPoint, id) => {
   try {

@@ -1,16 +1,13 @@
-import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { register, update } from "../api";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
-import {
-  Input,
-  SubmitButton,
-  BackButton,
-  ModalMultiSelect,
-} from "../components/Inputs";
+import { Input, SubmitButton, BackButton } from "../components/Inputs";
+
+import MultiSelectModal from "../modal-screen/MultiSelectModal";
 import Title from "../components/Title";
 
 const ControlUser = ({ route }) => {
@@ -99,7 +96,7 @@ const ControlUser = ({ route }) => {
         event={setPassword}
       />
 
-      <ModalMultiSelect
+      <MultiSelectModal
         isVisible={isVisibleRol}
         setIsVisible={setIsVisibleRol}
         event={setRol}

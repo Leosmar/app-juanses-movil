@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Modal, TextInput, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 
 const SearchModal = ({
@@ -14,7 +21,7 @@ const SearchModal = ({
       transparent={true}
       onRequestClose={() => setIsVisible(false)}
     >
-    <TouchableOpacity
+      <TouchableOpacity
         onPress={() => setIsVisible(false)}
         style={{
           backgroundColor: "rgba(0,0,0, 0.25)",
@@ -28,15 +35,21 @@ const SearchModal = ({
         <View></View>
       </TouchableOpacity>
 
-     <View style={{width: "100%", display: "flex", alignItems:"center"}}>
-     <TextInput
-        autoFocus={true}
-        placeholder="Buscar"
-        value={inputFilter}
-        onChangeText={setInputFilter}
-        style={{ backgroundColor: "#ccc", padding: 10, width: "80%", borderRadius: 5, marginTop: 10 }}
-      />
-     </View>
+      <View style={{ width: "100%", display: "flex", alignItems: "center" }}>
+        <TextInput
+          autoFocus={true}
+          placeholder="Buscar"
+          value={inputFilter}
+          onChangeText={setInputFilter}
+          style={{
+            backgroundColor: "#ccc",
+            padding: 10,
+            width: "80%",
+            borderRadius: 5,
+            marginTop: 10,
+          }}
+        />
+      </View>
     </Modal>
   );
 };

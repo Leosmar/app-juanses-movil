@@ -9,7 +9,7 @@ const Client = () => {
   const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
-  const [updateAfterDelete, setUpdateAfterDelete] = useState(false);
+  const [updateAfterDelete, setUpdateAfterDelete] = useState(true);
   const [data, setData] = useState("");
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Client = () => {
             setData({
               id: item.id,
               typeProduct: item.typeProduct,
-              deleteRoure: "delete-category",
+              deleteRoute: "delete-category",
               controlForm: "Control-category",
             });
             setIsVisible(true);
@@ -54,6 +54,7 @@ const Client = () => {
         title="Categorias"
         ListItem={ListItem}
         search="typeProduct"
+        updateAfterDelete={updateAfterDelete}
       ></ContainerSubRoutes>
     </>
   );
