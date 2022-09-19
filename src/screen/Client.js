@@ -13,6 +13,11 @@ const Client = () => {
   const [updateAfterDelete, setUpdateAfterDelete] = useState(true);
   const [data, setData] = useState("");
 
+  let controlForm = {
+    route: "Control-form",
+    screen: "Control-client",
+  };
+
   useEffect(() => {
     setIsVisible(false);
   }, [isFocused]);
@@ -31,7 +36,7 @@ const Client = () => {
               dni: item.dni,
               dir: item.dir,
               deleteRoute: "delete-client",
-              controlForm: "Control-client",
+              controlForm,
             });
             setIsVisible(true);
           }}
@@ -55,7 +60,7 @@ const Client = () => {
         setUpdateAfterDelete={setUpdateAfterDelete}
       />
       <ContainerSubRoutes
-        add="Control-client"
+        controlForm={controlForm}
         back="Register"
         getRoute="get-client"
         title="Clientes"

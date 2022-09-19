@@ -12,6 +12,11 @@ const Phone = () => {
   const [updateAfterDelete, setUpdateAfterDelete] = useState(false);
   const [data, setData] = useState("");
 
+  let controlForm = {
+    route: "Control-form",
+    screen: "Control-phone",
+  };
+
   useEffect(() => {
     setIsVisible(false);
   }, [isFocused]);
@@ -23,25 +28,16 @@ const Phone = () => {
           style={styles.itemContainer}
           onPress={() => {
             setData({
-              id: item.id,
-              brand: item.brand,
-              model: item.model,
-              color: item.color,
-              imei1: item.imei1,
-              imei2: item.imei2,
-              ram: item.ram,
-              rom: item.rom,
-              totalValue: item.totalValue,
-              subjectValue: item.subjectValue,
-              stock: item.stock,
-              buyProductId: item.buyProductId,
-              deleteRoure: "delete-phone",
-              controlForm: "Control-phone",
+              ...item,
+              deleteRoute: "delete-phone",
+              controlForm,
             });
             setIsVisible(true);
           }}
         >
-          <Text style={styles.itemList}>{item.brand} {item.model}</Text>
+          <Text style={styles.itemList}>
+            {item.brand} {item.model}
+          </Text>
           <View>{children}</View>
         </TouchableOpacity>
       </View>
@@ -58,7 +54,7 @@ const Phone = () => {
         setUpdateAfterDelete={setUpdateAfterDelete}
       />
       <ContainerSubRoutes
-        add="Control-phone"
+        controlForm={controlForm}
         back="Inventory"
         getRoute="get-phone"
         title="Telefonos"

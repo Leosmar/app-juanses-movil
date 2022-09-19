@@ -4,13 +4,21 @@ import React, { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
-import DescCategory from "../modal-screen/DescCategory";
+import DesOneItem from "../modal-screen/DescOneItem";
+
 const Client = () => {
   const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
   const [updateAfterDelete, setUpdateAfterDelete] = useState(true);
   const [data, setData] = useState("");
+
+  let controlForm = {
+    route: "Control-form",
+    screen: "Control-one-item",
+    titleText: "Categoria",
+    dataBaseCol: "typeProduct",
+  };
 
   useEffect(() => {
     setIsVisible(false);
@@ -24,9 +32,9 @@ const Client = () => {
           onPress={() => {
             setData({
               id: item.id,
-              typeProduct: item.typeProduct,
+              value: item.typeProduct,
               deleteRoute: "delete-category",
-              controlForm: "Control-category",
+              controlForm: { ...controlForm, putApi: "put-category" },
             });
             setIsVisible(true);
           }}
@@ -40,7 +48,7 @@ const Client = () => {
 
   return (
     <>
-      <DescCategory
+      <DesOneItem
         data={data}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
@@ -48,7 +56,7 @@ const Client = () => {
         setUpdateAfterDelete={setUpdateAfterDelete}
       />
       <ContainerSubRoutes
-        add="Control-category"
+        controlForm={{ ...controlForm, postApi: "post-category" }}
         back="Inventory"
         getRoute="get-category"
         title="Categorias"

@@ -1,13 +1,50 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import DescBtn from "../components/DescBtn";
-
+import { getData } from "../api";
 const DescBuyProduct = ({
   isVisible,
   setIsVisible,
   data,
   setUpdateAfterDelete,
 }) => {
+  const [phoneRegister, setPhoneRegister] = useState();
+
+  const getPhonesRegister = async () => {
+    const res = await getData("get-buy-product-phone-register");
+    if (res?.isEmpity !== true) {
+      const filterData = res.filter((item) => item.id === data.id);
+
+      const dataPhone = filterData.map((item) => {
+        return {
+          id: item.imei1,
+          brand: item.brand,
+          model: item.model,
+          imei1: item.imei1,
+          imei2: item.imei2,
+        };
+      });
+      return setPhoneRegister(dataPhone);
+    }
+
+    if (res?.isEmpity === true) {
+      return setPhoneRegister(res);
+    }
+  };
+
+  useEffect(() => {
+    if (isVisible === true) {
+      getPhonesRegister();
+    }
+  }, [isVisible]);
+
   return (
     <Modal
       visible={isVisible}
@@ -67,6 +104,23 @@ const DescBuyProduct = ({
           setIsVisible={setIsVisible}
           setUpdateAfterDelete={setUpdateAfterDelete}
         />
+
+        {phoneRegister && <FlatList
+          data={phoneRegister}
+          keyExtractor={(item) => JSON.stringify(item.id)}
+          renderItem={(item) => {
+            return (
+              <>
+                <Text style={[styles.textColor, styles.itemText]}>
+                  {item.item.brand} {item.item.model}
+                </Text>
+                <Text style={[styles.textColor, styles.itemText]}>
+                  {item.item.imei1} {item.item.imei2}
+                </Text>
+              </>
+            );
+          }}
+        />}
       </View>
     </Modal>
   );

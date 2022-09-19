@@ -21,14 +21,6 @@ const ControlUser = ({ route }) => {
   const [loader, setLoader] = useState(false);
   const navigation = useNavigation();
 
-  const cleanInputs = () => {
-    setId("");
-    setName("");
-    setPassword("");
-    setRol("");
-    setLoader(false);
-  };
-
   useEffect(() => {
     if (params) {
       setId(params.id);
@@ -36,8 +28,6 @@ const ControlUser = ({ route }) => {
       setPassword(params.password);
       setRol(params.rol);
       setInputTextRol(params.rol === 1 ? "Admin" : "Empleado");
-    } else {
-      cleanInputs();
     }
   }, [params]);
 
@@ -52,7 +42,7 @@ const ControlUser = ({ route }) => {
         { name, password, rol },
         "Usuario"
       );
-      !res ? cleanInputs() : "";
+      res && setloader(false);
       navigation.navigate("User");
     }
     if (params) {
@@ -62,7 +52,7 @@ const ControlUser = ({ route }) => {
         "Usuario"
       );
 
-      !res ? cleanInputs() : "";
+      res && setloader(false);
       navigation.navigate("User");
     }
   };

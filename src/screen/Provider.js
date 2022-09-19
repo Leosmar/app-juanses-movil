@@ -13,6 +13,11 @@ const Provider = () => {
   const [updateAfterDelete, setUpdateAfterDelete] = useState(true);
   const [data, setData] = useState("");
 
+  let controlForm = {
+    route: "Control-form",
+    screen: "Control-provider",
+  };
+
   useEffect(() => {
     setIsVisible(false);
   }, [isFocused]);
@@ -31,7 +36,7 @@ const Provider = () => {
               email: item.email,
               dir: item.dir,
               deleteRoute: "delete-provider",
-              controlForm: "Control-provider",
+              controlForm,
             });
             setIsVisible(true);
           }}
@@ -53,7 +58,7 @@ const Provider = () => {
         setUpdateAfterDelete={setUpdateAfterDelete}
       />
       <ContainerSubRoutes
-        add="Control-provider"
+       controlForm={controlForm}
         back="Register"
         getRoute="get-provider"
         title="Proveedores"

@@ -8,52 +8,49 @@ import Layout from "../components/Layout";
 import { Input, SubmitButton, BackButton } from "../components/Inputs";
 import Title from "../components/Title";
 
-const ControlCategory = ({ route }) => {
+const ControlOneItem = ({ route }) => {
   const params = route.params;
+  let putApi = params.controlForm?.putApi;
+  let postApi = params.controlForm?.postApi;
+  let dataBaseCol = params.controlForm.dataBaseCol;
+  let titleText = params.controlForm?.titleText;
 
   const navigation = useNavigation();
   const [id, setId] = useState("");
-  const [typeProduct, setTypeProduct] = useState("");
+  const [value, setValue] = useState("");
   const [loader, setloader] = useState(false);
 
-  const cleanInputs = () => {
-    setId("");
-    setTypeProduct("");
-    setloader(false);
-  };
-
   useEffect(() => {
-    if (params) {
+    if (putApi) {
       setId(params.id);
-      setTypeProduct(params.typeProduct);
-      
-    } else {
-      cleanInputs();
+      setValue(params.value);
     }
-  }, [params]);
+  }, [putApi]);
 
   const handleSubmit = async () => {
+    if (value === "") return Alert.alert("Complete el campo obligatorio");
 
+    setloader(true);
 
-    if (typeProduct === "") return Alert.alert("Complete el campo obligatorio");
-    
-    setloader(true)
-
-    if (!params) {
-        
-      const res = await register("post-category", { typeProduct }, "Categoria");
-      !res ? cleanInputs() : "";
-      navigation.navigate("Category");
+    if (postApi) {
+      const res = await register(
+        postApi,
+        { [dataBaseCol]: value },
+        titleText
+      );
+      res && setloader(false);
+      navigation.goBack();
     }
-    if (params) {
+
+    if (putApi) {
       const res = await update(
-        "put-category",
-        { id, typeProduct },
-        "Categoria"
+        putApi,
+        { id, [dataBaseCol]: value },
+        titleText
       );
 
-      !res ? cleanInputs() : "";
-      navigation.navigate("Category");
+      res && setloader(false);
+      navigation.goBack();
     }
   };
 
@@ -65,26 +62,28 @@ const ControlCategory = ({ route }) => {
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
         <BackButton HandleEvent={() => navigation.goBack()} />
-        <Title>{params ? "Editar" : "Registrar"} Categoria</Title>
+        <Title>
+          {putApi ? "Editar" : "Registrar"} {titleText}
+        </Title>
       </View>
 
       <Input
-        text="Categoria *"
+        text={`${titleText} *`}
         placeholder=""
         contentType="text"
-        data={typeProduct}
+        data={value}
         keyboardType="default"
-        event={setTypeProduct}
+        event={setValue}
       />
 
       <SubmitButton
-        textContent={params ? "Editar" : "Registrar"}
+        textContent={putApi ? "Editar" : "Registrar"}
         HandleEvent={handleSubmit}
       />
     </Layout>
   );
 };
 
-export default ControlCategory;
+export default ControlOneItem;
 
 const styles = StyleSheet.create({});

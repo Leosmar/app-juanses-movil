@@ -5,16 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 import { register, update } from "../api";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
-import {
-  Input,
-  SubmitButton,
-  InputMultiSelect,
-  BackButton,
-} from "../components/Inputs";
+import { Input, SubmitButton, BackButton } from "../components/Inputs";
 import Title from "../components/Title";
 
 const ControlProvider = ({ route }) => {
+  const navigation = useNavigation();
   const params = route.params;
+  const [loader, setLoader] = useState(false);
 
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -22,21 +19,7 @@ const ControlProvider = ({ route }) => {
   const [dni, setDni] = useState("");
   const [email, setEmail] = useState("");
   const [dir, setDir] = useState("");
-
-  const [loader, setLoader] = useState(false);
-  const navigation = useNavigation();
-
-  const cleanInputs = () => {
-    setId("");
-    setName("");
-    setTelf("");
-    setDni("");
-    setEmail("");
-    setDir("");
-
-    setLoader(false);
-  };
-
+  
   useEffect(() => {
     if (params) {
       setId(params.id);
@@ -45,8 +28,6 @@ const ControlProvider = ({ route }) => {
       setDni(params.dni);
       setEmail(params.email);
       setDir(params.dir);
-    } else {
-      cleanInputs();
     }
   }, [params]);
 
@@ -62,7 +43,7 @@ const ControlProvider = ({ route }) => {
         "Proveedor"
       );
 
-      !res ? cleanInputs() : "";
+      res && setloader(false);
       navigation.goBack();
     }
     if (params) {
@@ -72,7 +53,7 @@ const ControlProvider = ({ route }) => {
         "Proveedor"
       );
 
-      !res ? cleanInputs() : "";
+      res && setloader(false);
       navigation.goBack();
     }
   };

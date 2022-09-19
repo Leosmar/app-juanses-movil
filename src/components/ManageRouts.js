@@ -9,22 +9,14 @@ import TabBar from "./TabBar";
 
 //Hidden tabBar routes
 import User from "../screen/User";
-import ControlUser from "../controller/ControlUser";
-
 import Provider from "../screen/Provider";
-import ControlProvider from "../controller/ControlProvider";
-
 import Client from "../screen/Client";
-import ControlClient from "../controller/ControlClient";
-
 import Category from "../screen/Category";
-import ControlCategory from "../controller/ControlCategory";
-
 import BuyProducts from "../screen/BuyProduct";
-import ControlBuyProduct from "../controller/ControlBuyProduct";
-
 import Phone from "../screen/Phone";
-import ControlPhone from "../controller/ControlPhone";
+import Brand from "../screen/Brand";
+import ControlForm from "../controller/ControlForm";
+import Model from "../screen/Model";
 
 function ManageRouts() {
   const Stack = createNativeStackNavigator();
@@ -64,33 +56,21 @@ function ManageRouts() {
           }}
         >
           <Stack.Screen name="Tab-bar" component={TabBar} />
+          <Stack.Screen name="Control-form" component={ControlForm} />
 
           <Stack.Screen name="User" component={User} />
-          <Stack.Screen name="Control-user" component={ControlUser} />
-
           <Stack.Screen name="Provider" component={Provider} />
-          <Stack.Screen name="Control-provider" component={ControlProvider} />
-
           <Stack.Screen name="Client" component={Client} />
-          <Stack.Screen name="Control-client" component={ControlClient} />
-
           <Stack.Screen name="Category" component={Category} />
-          <Stack.Screen name="Control-category" component={ControlCategory} />
-
           <Stack.Screen name="Buy-product" component={BuyProducts} />
-          <Stack.Screen
-            name="Control-buy-product"
-            component={ControlBuyProduct}
-          />
-
-          <Stack.Screen name="Phone" component={Phone}/>
-          <Stack.Screen name="Control-phone" component={ControlPhone}/>
-
+          <Stack.Screen name="Brand" component={Brand} />
+          <Stack.Screen name="Model" component={Model} />
+          <Stack.Screen name="Phone" component={Phone} />
+        
         </Stack.Navigator>
       )}
     </UserContext.Provider>
   );
 }
-
 
 export default ManageRouts;

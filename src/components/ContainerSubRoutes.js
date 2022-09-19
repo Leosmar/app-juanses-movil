@@ -19,7 +19,7 @@ import SearchModal from "../modal-screen/SearchModal";
 
 const ContainerSubRoutes = ({
   getRoute,
-  add,
+  controlForm,
   title,
   ListItem,
   updateAfterDelete,
@@ -56,9 +56,9 @@ const ContainerSubRoutes = ({
     let searchLoweCase = "";
 
     if (search === "providerId") {
-      searchLoweCase = JSON.stringify(item.provider.name).toLowerCase();
+      searchLoweCase = JSON.stringify(item?.provider?.name || "").toLowerCase();
     } else {
-      searchLoweCase = JSON.stringify(item[search]).toLowerCase();
+      searchLoweCase = JSON.stringify(item[search] || "").toLowerCase();
     }
 
     let textLoweCase = inputFilter.toLowerCase();
@@ -104,7 +104,18 @@ const ContainerSubRoutes = ({
             />
           </TouchableOpacity>
 
-          <AddButton HandleEvent={() => navigation.navigate(add)} />
+          <AddButton
+            HandleEvent={() =>
+              navigation.navigate(controlForm.route, {
+                screen: controlForm.screen,
+                params:
+                  controlForm.putApi || controlForm.postApi
+                    ? { controlForm }
+                    : undefined,
+              })
+            }
+          />
+          
         </View>
       </View>
 

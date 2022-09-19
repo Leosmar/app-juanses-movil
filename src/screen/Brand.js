@@ -5,9 +5,9 @@ import { useIsFocused } from "@react-navigation/native";
 
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
 
-import DescBuyProduct from "../modal-screen/DescBuyProduct";
+import DesOneItem from "../modal-screen/DescOneItem";
 
-const BuyProducts = () => {
+const Brand = () => {
   const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
@@ -16,7 +16,9 @@ const BuyProducts = () => {
 
   let controlForm = {
     route: "Control-form",
-    screen: "Control-buy-product",
+    screen: "Control-one-item",
+    titleText: "Marca",
+    dataBaseCol: "brand",
   };
 
   useEffect(() => {
@@ -24,12 +26,6 @@ const BuyProducts = () => {
   }, [isFocused]);
 
   const ListItem = ({ item, children }) => {
-    let providerName =
-      item?.provider !== null ? item?.provider?.name : "ELIMINADO";
-
-    let categoryTypeProduct =
-      item?.category !== null ? item?.category?.typeProduct : "ELIMINADO";
-
     return (
       <View>
         <TouchableOpacity
@@ -37,25 +33,14 @@ const BuyProducts = () => {
           onPress={() => {
             setData({
               id: item.id,
-              providerId: item.providerId || "null",
-              providerName,
-              categoryId: item.categoryId || "null",
-              categoryTypeProduct,
-              barCode: JSON.stringify(item.barCode),
-              cant: JSON.stringify(item.cant),
-              totalValue: JSON.stringify(item.totalValue),
-              paid: JSON.stringify(item.paid),
-              comment: item.comment,
-              deleteRoute: "delete-buy-product",
-              controlForm,
+              value: item.brand,
+              deleteRoute: "delete-brand",
+              controlForm: { ...controlForm, putApi: "put-brand" },
             });
             setIsVisible(true);
           }}
         >
-          <Text style={styles.itemList}>
-            {providerName} - {categoryTypeProduct}
-          </Text>
-
+          <Text style={styles.itemList}>{item.brand}</Text>
           <View>{children}</View>
         </TouchableOpacity>
       </View>
@@ -64,26 +49,27 @@ const BuyProducts = () => {
 
   return (
     <>
-      <DescBuyProduct
+      <DesOneItem
+        data={data}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
-        data={data}
+        updateAfterDelete={updateAfterDelete}
         setUpdateAfterDelete={setUpdateAfterDelete}
       />
       <ContainerSubRoutes
-        controlForm={controlForm}
+        controlForm={{ ...controlForm, postApi: "post-brand" }}
         back="Inventory"
-        getRoute="get-buy-product"
-        title="Pedidos"
+        getRoute="get-brand"
+        title="Marcas de telefonos"
         ListItem={ListItem}
-        search="providerId"
+        search="brand"
         updateAfterDelete={updateAfterDelete}
       ></ContainerSubRoutes>
     </>
   );
 };
 
-export default BuyProducts;
+export default Brand;
 
 const styles = StyleSheet.create({
   itemContainer: {

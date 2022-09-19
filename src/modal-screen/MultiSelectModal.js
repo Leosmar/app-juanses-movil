@@ -25,9 +25,8 @@ const MultiSelectModal = ({
   const [inputFilter, setInputFilter] = useState("");
 
   const ItemList = (item) => {
-    let nameLoweCase = item.name.toLowerCase();
+    let nameLoweCase = item?.name.toLowerCase();
     let textLoweCase = inputFilter.toLowerCase();
-
     return (
       <>
         {nameLoweCase.indexOf(textLoweCase) != -1 ? (
@@ -129,7 +128,7 @@ const MultiSelectModal = ({
               />
             </View>
 
-            {items.length > 0 ? (
+            {items?.length > 0 ? (
               <FlatList
                 data={items}
                 keyExtractor={(item) => JSON.stringify(item.id)}

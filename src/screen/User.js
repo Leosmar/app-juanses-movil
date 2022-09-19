@@ -13,6 +13,11 @@ const User = () => {
   const [updateAfterDelete, setUpdateAfterDelete] = useState(true);
   const [data, setData] = useState("");
 
+  let controlForm = {
+    route: "Control-form",
+    screen: "Control-user",
+  };
+
   useEffect(() => {
     setIsVisible(false);
   }, [isFocused]);
@@ -29,7 +34,7 @@ const User = () => {
               password: item.password,
               rol: item.rol,
               deleteRoute: "delete-user",
-              controlForm: "Control-user",
+              controlForm,
             });
             setIsVisible(true);
           }}
@@ -54,7 +59,7 @@ const User = () => {
       />
       <ContainerSubRoutes
         back="Register"
-        add="Control-user"
+        controlForm={controlForm}
         getRoute="get-user"
         title="Usuarios"
         ListItem={ListItem}

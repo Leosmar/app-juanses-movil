@@ -21,7 +21,12 @@ const DescBtn = ({ data, setIsVisible, setUpdateAfterDelete }) => {
       </View>
 
       <UpdateButton
-        HandleEvent={() => navigation.navigate(data.controlForm, { ...data })}
+        HandleEvent={() =>
+          navigation.navigate(data.controlForm.route, {
+            screen: data.controlForm.screen,
+            params: { ...data },
+          })
+        }
       />
     </View>
   );

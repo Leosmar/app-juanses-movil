@@ -3,7 +3,7 @@ import React from "react";
 
 import DescBtn from "../components/DescBtn";
 
-const DescCategory = ({
+const DesOneItem = ({
   isVisible,
   setIsVisible,
   data,
@@ -46,7 +46,7 @@ const DescCategory = ({
             styles.textColor,
           ]}
         >
-          {data.typeProduct}
+          {data.value}
         </Text>
 
         <DescBtn
@@ -59,7 +59,7 @@ const DescCategory = ({
   );
 };
 
-export default DescCategory;
+export default DesOneItem;
 
 const styles = StyleSheet.create({
   container: {

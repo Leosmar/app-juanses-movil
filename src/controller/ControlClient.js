@@ -14,7 +14,9 @@ import {
 import Title from "../components/Title";
 
 const ControlClient = ({ route }) => {
+  const navigation = useNavigation();
   const params = route.params;
+  const [loader, setLoader] = useState(false);
 
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -22,9 +24,6 @@ const ControlClient = ({ route }) => {
   const [telf, setTelf] = useState("");
   const [dni, setDni] = useState("");
   const [dir, setDir] = useState("");
-
-  const [loader, setLoader] = useState(false);
-  const navigation = useNavigation();
 
   const cleanInputs = () => {
     setId("");
@@ -45,8 +44,6 @@ const ControlClient = ({ route }) => {
       setTelf(params.telf);
       setDni(params.dni);
       setDir(params.dir);
-    } else {
-      cleanInputs();
     }
   }, [params]);
 
@@ -62,8 +59,8 @@ const ControlClient = ({ route }) => {
         "Cliente"
       );
 
-      !res ? cleanInputs() : "";
-      navigation.navigate("Client");
+      res && setloader(false);
+      navigation.goBack();
     }
     if (params) {
       const res = await update(
@@ -72,12 +69,10 @@ const ControlClient = ({ route }) => {
         "Cliente"
       );
 
-      !res ? cleanInputs() : "";
-      navigation.navigate("Client");
+      res && setloader(false);
+      navigation.goBack();
     }
   };
-
-
 
   return loader ? (
     <Loader />
@@ -135,8 +130,6 @@ const ControlClient = ({ route }) => {
         textContent={params ? "Editar" : "Registrar"}
         HandleEvent={handleSubmit}
       />
-
-      
     </Layout>
   );
 };

@@ -3,12 +3,7 @@ import React from "react";
 
 import DescBtn from "../components/DescBtn";
 
-const DesPhone = ({
-  isVisible,
-  setIsVisible,
-  data,
-  setUpdateAfterDelete,
-}) => {
+const DesPhone = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
   return (
     <Modal
       visible={isVisible}
@@ -49,24 +44,32 @@ const DesPhone = ({
           {data.brand} {data.model}
         </Text>
         <Text style={[styles.textColor, styles.itemText]}>
+          Pedido de: {data.nameProvider}
+        </Text>
+        <Text style={[styles.textColor, styles.itemText]}>
+          Codigo de pedido: {data.barCode}
+        </Text>
+        <Text style={[styles.textColor, styles.itemText]}>
           Color: {data.color}
         </Text>
         <Text style={[styles.textColor, styles.itemText]}>
           IMEI 1: {data.imei1}
-        </Text><Text style={[styles.textColor, styles.itemText]}>
+        </Text>
+        <Text style={[styles.textColor, styles.itemText]}>
           IMEI 2: {data.imei2}
-        </Text><Text style={[styles.textColor, styles.itemText]}>
-          RAM: {data.ram}
-        </Text><Text style={[styles.textColor, styles.itemText]}>
+        </Text>
+        <Text style={[styles.textColor, styles.itemText]}>RAM: {data.ram}</Text>
+        <Text style={[styles.textColor, styles.itemText]}>
           RROM: {data.rom}
-        </Text><Text style={[styles.textColor, styles.itemText]}>
+        </Text>
+        <Text style={[styles.textColor, styles.itemText]}>
           Valor total: {data.totalValue}
-        </Text><Text style={[styles.textColor, styles.itemText]}>
+        </Text>
+        <Text style={[styles.textColor, styles.itemText]}>
           Precio de venta: {data.subjectValue}
-        </Text><Text style={[styles.textColor, styles.itemText]}>
-          Disponibilidad: {data.stock === true? "Si" : "No"}
-        </Text><Text style={[styles.textColor, styles.itemText]}>
-          Pedido: {data.buyProductsId}
+        </Text>
+        <Text style={[styles.textColor, styles.itemText]}>
+          Disponibilidad: {data.stock == true ? "Si" : "No"}
         </Text>
         <DescBtn
           data={data}

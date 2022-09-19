@@ -12,6 +12,10 @@ const InventoryScreen = () => {
 
       <ButtonOnPressItem title="Pedidos" to="Buy-product" />
 
+      <ButtonOnPressItem title="Marcas de telefonos" to="Brand" />
+
+      <ButtonOnPressItem title="Modelos de telefonos" to="Model" />
+
       <ButtonOnPressItem title="Telefonos" to="Phone" />
     </Layout>
   );

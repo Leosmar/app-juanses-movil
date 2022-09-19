@@ -1,132 +1,80 @@
-import { StyleSheet, View, Alert, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
-import { getData, register, update } from "../api";
+import { register, update } from "../api";
 import Loader from "../components/Loader";
 import Layout from "../components/Layout";
 import { Input, SubmitButton, BackButton } from "../components/Inputs";
 import MultiSelectModal from "../modal-screen/MultiSelectModal";
 import Title from "../components/Title";
+import { useGetMultiSelect } from "../hooks/useGetMultiSelect";
 
 const ControlBuyProduct = ({ route }) => {
   const params = route.params || null;
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
-
-  const [isVisibleProvider, setIsVisibleProvider] = useState(false);
-  const [isVisibleCategory, setIsVisibleCategory] = useState(false);
-
+  const [loader, setloader] = useState(false);
   const [id, setId] = useState("");
-  const [providerId, setProviderId] = useState("");
-  const [categoryId, setCategoryId] = useState("");
   const [barCode, setBarCode] = useState("");
   const [cant, setCant] = useState("");
   const [totalValue, setTotalValue] = useState("");
   const [paid, setPaid] = useState("");
   const [comment, setComment] = useState("");
-
-  const [inputTextProvider, setInputTextProvider] = useState("");
-  const [inputTextCategory, setInputTextCategory] = useState("");
-
-  const [categoryMultiSelect, setCategoryMultiSelect] = useState([]);
-  const [providerMultiSelect, setProviderMultiSelect] = useState([]);
-
-  const [loader, setloader] = useState(false);
-
-  const cleanInputs = () => {
-    setId("");
-    setProviderId("");
-    setCategoryId("");
-    setBarCode("");
-    setCant("");
-    setTotalValue("");
-    setPaid("");
-    setProviderMultiSelect([]);
-    setCategoryMultiSelect([]);
-    setInputTextProvider("");
-    setInputTextCategory("");
-    setComment("");
-    setloader(false);
-  };
-
-  const getDataMultiSelect = async () => {
-    const resProvider = await getData("get-provider");
-    if (resProvider?.isEmpity !== true) {
-      const filterProvider = resProvider.map((e) => {
-        return { id: e.id, name: e.name };
-      });
-      setProviderMultiSelect(filterProvider);
-    }
-    if (resProvider?.isEmpity === true) {
-      setProviderMultiSelect(resProvider);
-    }
-
-    const resCategory = await getData("get-category");
-    if (resCategory?.isEmpity !== true) {
-      const filterCategory = resCategory.map((e) => {
-        return { id: e.id, name: e.typeProduct };
-      });
-      setCategoryMultiSelect(filterCategory);
-    }
-    if (resCategory?.isEmpity === true) {
-      setCategoryMultiSelect(resCategory);
-    }
-  };
+  const provider = useGetMultiSelect("get-provider", "name");
+  const category = useGetMultiSelect("get-category", "typeProduct");
 
   useEffect(() => {
     if (params) {
       setId(params.id);
-      setProviderId(params.providerId);
-      setCategoryId(params.categoryId);
+      provider.setId(params.providerId);
+      category.setId(params.categoryId);
       setBarCode(params.barCode);
       setCant(params.cant);
       setTotalValue(params.totalValue);
       setPaid(params.paid);
       setComment(params.comment);
-      setInputTextProvider(params.providerName);
-      setInputTextCategory(params.categoryTypeProduct);
+      provider.setInputText(params.providerName);
+      category.setInputText(params.categoryTypeProduct);
       setloader(false);
-    } else {
-      cleanInputs();
     }
   }, [params]);
-
-  useEffect(() => {
-    if (isFocused === true) {
-      getDataMultiSelect();
-      setIsVisibleProvider(false);
-      setIsVisibleCategory(false);
-    }
-  }, [isFocused]);
 
   const handleSubmit = async () => {
     if (
       barCode === "" ||
-      providerId === "" ||
-      categoryId === "" ||
+      provider.id === "" ||
+      category.id === "" ||
       totalValue === ""
     )
-      return Alert.alert("Complete el campo obligatorio");
+      return Alert.alert("Complete los campo obligatorio");
 
     setloader(true);
 
     if (!params) {
       const res = await register(
         "post-buy-product",
-        { providerId, categoryId, barCode, cant, totalValue, paid, comment },
+        {
+          providerId: provider.id,
+          categoryId: category.id,
+          barCode,
+          cant,
+          totalValue,
+          paid,
+          comment,
+        },
         "Pedido"
       );
-      !res ? cleanInputs() : "";
+      res && setloader(false);
       navigation.goBack();
     }
+
     if (params) {
       const res = await update(
         "put-buy-product",
         {
           id,
-          providerId,
-          categoryId,
+          providerId: provider.id,
+          categoryId: category.id,
           barCode,
           cant,
           totalValue,
@@ -136,7 +84,7 @@ const ControlBuyProduct = ({ route }) => {
         "Pedido"
       );
 
-      !res ? cleanInputs() : "";
+      res && setloader(false);
       navigation.goBack();
     }
   };
@@ -158,13 +106,13 @@ const ControlBuyProduct = ({ route }) => {
         </View>
 
         <MultiSelectModal
-          isVisible={isVisibleProvider}
-          setIsVisible={setIsVisibleProvider}
-          event={setProviderId}
-          items={providerMultiSelect}
+          isVisible={provider.isVisible}
+          setIsVisible={provider.setIsVisible}
+          event={provider.setId}
+          items={provider.multiSelect}
           text="Proveedores *"
-          inputText={inputTextProvider}
-          setInputText={setInputTextProvider}
+          inputText={provider.inputText}
+          setInputText={provider.setInputText}
           ifItemEmpity={{
             text: "proveedor",
             addRoute: "Control-provider",
@@ -172,13 +120,13 @@ const ControlBuyProduct = ({ route }) => {
         />
 
         <MultiSelectModal
-          isVisible={isVisibleCategory}
-          setIsVisible={setIsVisibleCategory}
-          event={setCategoryId}
-          items={categoryMultiSelect}
+          isVisible={category.isVisible}
+          setIsVisible={category.setIsVisible}
+          event={category.setId}
+          items={category.multiSelect}
           text="Categorias *"
-          inputText={inputTextCategory}
-          setInputText={setInputTextCategory}
+          inputText={category.inputText}
+          setInputText={category.setInputText}
           ifItemEmpity={{
             text: "categoria",
             addRoute: "Control-category",

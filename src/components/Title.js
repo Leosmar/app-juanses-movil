@@ -13,10 +13,9 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
-    marginHorizontal: 10,
   },
   titleText: {
-    fontSize: 28,
+    fontSize: 24,
     color: "#fff",
     fontWeight: "bold"
   }
