@@ -1,5 +1,6 @@
-import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import React from "react";
+import colors from "../helpers/colors";
 
 const Loader = () => {
   return (
@@ -16,6 +17,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#202020",
+    backgroundColor: colors.mainColor,
   },
 });

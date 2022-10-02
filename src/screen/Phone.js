@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-
 import React, { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
-
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
 import DescPhone from "../modal-screen/DescPhone";
+import colors from "../helpers/colors";
+
 const Phone = () => {
   const isFocused = useIsFocused();
 
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemList: {
-    color: "#fff",
+    color: colors.fontColor,
   },
 });

@@ -16,6 +16,7 @@ import Layout from "../components/Layout";
 import { AddButton, BackButton } from "../components/Inputs";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import SearchModal from "../modal-screen/SearchModal";
+import colors from "../helpers/colors";
 
 const ContainerSubRoutes = ({
   getRoute,
@@ -67,7 +68,7 @@ const ContainerSubRoutes = ({
         {searchLoweCase.indexOf(textLoweCase) != -1 ? (
           <View style={styles.itemContainer}>
             <ListItem item={item}>
-              <Entypo name="dots-three-horizontal" size={24} color="#fff" />
+              <Entypo name="dots-three-horizontal" size={24} color={colors.fontColor} />
             </ListItem>
           </View>
         ) : (
@@ -95,7 +96,7 @@ const ContainerSubRoutes = ({
             style={{ marginRight: 10 }}
             onPress={() => setIsVisible(true)}
           >
-            <Ionicons name="search" size={28} color="#fff" />
+            <Ionicons name="search" size={28} color={colors.fontColor} />
             <SearchModal
               isVisible={isVisible}
               setIsVisible={setIsVisible}
@@ -136,7 +137,7 @@ const ContainerSubRoutes = ({
           No se han encontrado registros
         </Text>
       ) : (
-        <ActivityIndicator color="#fff" size="large" />
+        <ActivityIndicator color={colors.fontColor} size="large" />
       )}
     </Layout>
   );
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemContainer: {
-    backgroundColor: "#333",
+    backgroundColor: colors.secondColor,
     marginVertical: 10,
     marginHorizontal: 30,
     padding: 10,

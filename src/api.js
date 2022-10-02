@@ -1,11 +1,7 @@
-import { useEffect } from "react";
 import { Alert } from "react-native";
 
-const staticPath = "192.168.100.96";
-const defaulPath = "10.0.2.2";
-
 const url =
-  `http://${staticPath}:3000/api/` ||
+  "http://192.168.100.96:3000/api/" ||
   "https://api-juanses-movil-production.up.railway.app/api/";
 
 export const login = async (endPoint, data) => {
@@ -93,7 +89,7 @@ export const update = async (endPoint, data, comment) => {
     let json = await res.json();
 
     if (json.error === "false") {
-      Alert.alert(`${comment} Actualizado correctamente`);
+      Alert.alert(`${comment} actualizado correctamente`);
       return false;
     } else {
       Alert.alert(`Error: ${json.message}`);
@@ -116,20 +112,19 @@ export const getData = async (endPoint) => {
       };
 
     let json = await res.json();
-    if (json.error === "false") {
 
+    if (json.error === "false") {
       if (json.data.length < 1) {
         return { isEmpity: true };
-     
       } else {
         return json.data;
       }
     } else {
-      Alert.alert(`Error: ${json.message}`);
+      Alert.alert(`Error: ${json.message || json.err.name}`);
       return json.error;
     }
   } catch (error) {
-    console.log(`Error ${error.status} ${error.statusText}`);
+    console.log(`Error ${error.err.name} ${error.statusText}`);
     return 0;
   }
 };

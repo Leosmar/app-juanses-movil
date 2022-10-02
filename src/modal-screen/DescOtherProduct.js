@@ -3,7 +3,7 @@ import React from "react";
 import DescBtn from "../components/DescBtn";
 import colors from "../helpers/colors";
 
-const DescClient = ({
+const DescOtherProduct = ({
   isVisible,
   setIsVisible,
   data,
@@ -46,18 +46,17 @@ const DescClient = ({
             styles.textColor,
           ]}
         >
-          {data.name} {data.lastName}
+          {data.typeProduct} {data.name}
         </Text>
         <Text style={[styles.textColor, styles.itemText]}>
-          Numero de telefono: {data.telf}
+          Cantidad: {data.cant}
         </Text>
         <Text style={[styles.textColor, styles.itemText]}>
-          Identificación: {data.dni}
+          Valor total (c/u): {data.totalValue}
         </Text>
         <Text style={[styles.textColor, styles.itemText]}>
-          Dirección: {data.dir}
+          Precio de venta (c/u): {data.subjectValue}
         </Text>
-
         <DescBtn
           data={data}
           setIsVisible={setIsVisible}
@@ -68,7 +67,7 @@ const DescClient = ({
   );
 };
 
-export default DescClient;
+export default DescOtherProduct;
 
 const styles = StyleSheet.create({
   container: {

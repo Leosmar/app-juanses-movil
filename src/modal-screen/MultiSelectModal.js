@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import DataEmpityWarning from "../components/DataEmpityWarning";
+import colors from "../helpers/colors";
 
 const MultiSelectModal = ({
   event,
@@ -32,10 +33,11 @@ const MultiSelectModal = ({
         {nameLoweCase.indexOf(textLoweCase) != -1 ? (
           <TouchableOpacity
             style={{
-              backgroundColor: "#333",
+              backgroundColor: colors.secondColor,
               width: 500,
               padding: 10,
               marginVertical: 10,
+              borderRadius: 5,
             }}
             onPress={() => {
               event(item.id);
@@ -45,7 +47,7 @@ const MultiSelectModal = ({
           >
             <Text
               style={{
-                color: "#fff",
+                color: colors.fontColor,
               }}
             >
               {item.name}
@@ -62,7 +64,7 @@ const MultiSelectModal = ({
     <View style={styles.container}>
       <Text style={styles.inputLabel}>{text}</Text>
       <TouchableOpacity
-        style={[{ backgroundColor: "#363535", padding: 10 }]}
+        style={[{ backgroundColor: colors.secondColor, padding: 8, borderRadius: 5 }]}
         onPress={() => setIsVisible(true)}
       >
         <View
@@ -74,7 +76,7 @@ const MultiSelectModal = ({
           }}
         >
           <Text style={styles.inputLabel}>{inputText}</Text>
-          <MaterialIcons name="keyboard-arrow-down" size={24} color="#fff" />
+          <MaterialIcons name="keyboard-arrow-down" size={24} color={colors.fontColor} />
         </View>
         <Modal
           visible={isVisible}
@@ -88,7 +90,7 @@ const MultiSelectModal = ({
             style={{
               width: "100%",
               height: "100%",
-              backgroundColor: "#202020",
+              backgroundColor: colors.mainColor,
               padding: 30,
               display: "flex",
               alignItems: "center",
@@ -108,7 +110,7 @@ const MultiSelectModal = ({
                 }}
                 onPress={() => setIsVisible(false)}
               >
-                <AntDesign name="arrowleft" size={30} color="#fff" />
+                <AntDesign name="arrowleft" size={30} color={colors.fontColor} />
               </TouchableOpacity>
 
               <TextInput
@@ -117,7 +119,7 @@ const MultiSelectModal = ({
                 value={inputFilter}
                 onChangeText={setInputFilter}
                 style={{
-                  backgroundColor: "#fff",
+                  backgroundColor: colors.fontColor,
                   borderColor: "#000",
                   borderWidth: 1,
                   padding: 5,
@@ -140,7 +142,7 @@ const MultiSelectModal = ({
                 addRoute={ifItemEmpity?.addRoute}
               />
             ) : (
-              <ActivityIndicator color="#fff" size="large" />
+              <ActivityIndicator color={colors.fontColor} size="large" />
             )}
           </View>
         </Modal>
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   inputLabel: {
-    color: "#fff",
+    color: colors.fontColor,
   },
 });
 

@@ -1,12 +1,14 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons, Octicons   } from "@expo/vector-icons";
 
 import Home from "../screen/Home";
-import RegistrarCompra from "../screen/RegistrarCompra";
+import Transaction from "../screen/Transaction";
 import RegisterAll from "../screen/RegisterAll";
 import Inventory from "../screen/Inventory";
+import Balance from "../screen/Balance";
+import colors from "../helpers/colors";
 
 const TabBar = () => {
   const Tap = createBottomTabNavigator();
@@ -27,23 +29,41 @@ const TabBar = () => {
           title: "Inicio",
           tabBarIcon: ({ focused, size }) => {
             let iconColor;
-            iconColor = focused ? "#96B3FF" : "#fff";
+            iconColor = focused ? colors.blueLigthColor : colors.fontColor;
             return <AntDesign name="home" size={30} color={iconColor} />;
           },
         })}
       />
 
       <Tap.Screen
-        name="Deudas"
-        component={RegistrarCompra}
+        name="Transaction"
+        component={Transaction}
         options={({ route }) => ({
-          title: "Venta / Pago",
+          title: "Venta / Gasto",
           tabBarIcon: ({ focused, size }) => {
             let iconColor;
-            iconColor = focused ? "#96B3FF" : "#fff";
+            iconColor = focused ? colors.blueLigthColor : colors.fontColor;
             return (
               <MaterialCommunityIcons
                 name="account-cash-outline"
+                size={30}
+                color={iconColor}
+              />
+            );
+          },
+        })}
+      />
+      <Tap.Screen
+        name="Balance"
+        component={Balance}
+        options={({ route }) => ({
+          title: "Balance",
+          tabBarIcon: ({ focused, size }) => {
+            let iconColor;
+            iconColor = focused ? colors.blueLigthColor : colors.fontColor;
+            return (
+              <MaterialCommunityIcons
+                name="scale-balance"
                 size={30}
                 color={iconColor}
               />
@@ -58,7 +78,7 @@ const TabBar = () => {
           title: "Inventario",
           tabBarIcon: ({ focused, size }) => {
             let iconColor;
-            iconColor = focused ? "#96B3FF" : "#fff";
+            iconColor = focused ? colors.blueLigthColor : colors.fontColor;
             return <AntDesign name="inbox" size={30} color={iconColor} />;
           },
         })}
@@ -71,10 +91,10 @@ const TabBar = () => {
           tabBarHideOnKeyboard: true,
           tabBarIcon: ({ focused, size }) => {
             let iconColor;
-            iconColor = focused ? "#96B3FF" : "#fff";
+            iconColor = focused ? colors.blueLigthColor : colors.fontColor;
 
             return (
-              <AntDesign name="addusergroup" size={30} color={iconColor} />
+              <Octicons name="diff-added" size={30} color={iconColor} />
             );
           },
         })}

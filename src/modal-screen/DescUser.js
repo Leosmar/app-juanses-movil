@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 import React from "react";
 
 import DescBtn from "../components/DescBtn";
+import colors from "../helpers/colors";
 
 const DescUser = ({
   isVisible,
@@ -65,12 +66,12 @@ export default DescUser;
 const styles = StyleSheet.create({
   container: {
     margin: 35,
-    backgroundColor: "#202020",
+    backgroundColor: colors.mainColor,
     borderRadius: 10,
     padding: 20,
   },
   textColor: {
-    color: "#fff",
+    color: colors.fontColor,
   },
   itemText: {
     fontSize: 16,

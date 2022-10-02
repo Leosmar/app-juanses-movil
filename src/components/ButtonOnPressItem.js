@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from '@expo/vector-icons';
 
 import Title from "./Title";
+import colors from "../helpers/colors";
 
 const ButtonOnPressItem = ({ title, to }) => {
   const navigation = useNavigation();
@@ -15,7 +16,7 @@ const ButtonOnPressItem = ({ title, to }) => {
     >
 
       <Title>{title}</Title>
-      <MaterialIcons name="keyboard-arrow-right" size={24} color="#fff" />
+      <MaterialIcons name="keyboard-arrow-right" size={24} color={colors.fontColor} />
     </TouchableOpacity>
   );
 };
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     padding: 10,
-    backgroundColor: "#333",
+    backgroundColor: colors.secondColor,
     marginVertical: 10,
     flexDirection: "row",
     alignItems: "center",

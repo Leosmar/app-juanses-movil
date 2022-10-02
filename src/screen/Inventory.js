@@ -8,15 +8,9 @@ import ButtonOnPressItem from "../components/ButtonOnPressItem";
 const InventoryScreen = () => {
   return (
     <Layout>
-      <ButtonOnPressItem title="Categorias" to="Category" />
-
-      <ButtonOnPressItem title="Pedidos" to="Buy-product" />
-
-      <ButtonOnPressItem title="Marcas de telefonos" to="Brand" />
-
-      <ButtonOnPressItem title="Modelos de telefonos" to="Model" />
-
       <ButtonOnPressItem title="Telefonos" to="Phone" />
+      <ButtonOnPressItem title="Accesorios y otros" to="Other-product" />
+      
     </Layout>
   );
 };

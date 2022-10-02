@@ -2,6 +2,7 @@ import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import React, {useState} from "react";
 import LogOut from "./LogOut";
 import { MaterialIcons } from '@expo/vector-icons'; 
+import colors from "../helpers/colors";
 
 
 const Header = () => {
@@ -17,7 +18,7 @@ const Header = () => {
 
 
       <TouchableOpacity onPress={() => setBtn(true)}>
-      <MaterialIcons name="logout" size={30} color="#fff" />
+      <MaterialIcons name="logout" size={30} color={colors.errorColor} />
       </TouchableOpacity>
 
       {btn === true ? <LogOut/>: ""}

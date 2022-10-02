@@ -4,18 +4,11 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Modal,
-  FlatList,
-  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 
-import {
-  AntDesign,
-  Feather,
-  Entypo,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { AntDesign, Feather, Entypo } from "@expo/vector-icons";
+import colors from "../helpers/colors";
 
 export const Input = ({
   text,
@@ -35,18 +28,17 @@ export const Input = ({
         secureTextEntry={contentType === "password" ? true : false}
         keyboardType={keyboardType}
         style={{
-          backgroundColor: "#363535",
+          backgroundColor: colors.secondColor,
           borderColor: "transparent",
           borderRadius: 5,
           borderWidth: 1,
           padding: 5,
-          color: "#fff",
+          color: colors.fontColor,
         }}
       />
     </View>
   );
 };
-
 
 export const SubmitButton = ({ textContent, HandleEvent }) => {
   return (
@@ -59,12 +51,15 @@ export const SubmitButton = ({ textContent, HandleEvent }) => {
       <TouchableOpacity
         onPress={HandleEvent}
         style={{
-          backgroundColor: "#FF686E",
+          backgroundColor: colors.submitButtonColor,
           width: "50%",
           padding: 10,
+          borderRadius: 5,
         }}
       >
-        <Text style={[{ textAlign: "center" }]}>{textContent}</Text>
+        <Text style={[{ textAlign: "center", color: colors.fontColor }]}>
+          {textContent}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -76,13 +71,13 @@ export const DeleteButton = ({ HandleEvent }) => {
       <TouchableOpacity
         onPress={HandleEvent}
         style={{
-          backgroundColor: "#CF2F2A",
+          backgroundColor: colors.errorColor,
           padding: 5,
           margin: 5,
           borderRadius: 5,
         }}
       >
-        <AntDesign name="delete" size={24} color="#fff" />
+        <AntDesign name="delete" size={24} color={colors.fontColor} />
       </TouchableOpacity>
     </View>
   );
@@ -94,13 +89,13 @@ export const UpdateButton = ({ HandleEvent }) => {
       <TouchableOpacity
         onPress={HandleEvent}
         style={{
-          backgroundColor: "#96B3FF",
+          backgroundColor: colors.blueLigthColor,
           padding: 5,
           margin: 5,
           borderRadius: 5,
         }}
       >
-        <Feather name="edit-2" size={24} color="#fff" />
+        <Feather name="edit-2" size={24} color={colors.fontColor} />
       </TouchableOpacity>
     </View>
   );
@@ -113,7 +108,7 @@ export const BackButton = ({ HandleEvent }) => {
         onPress={HandleEvent}
         style={{ padding: 10, marginHorizontal: 5 }}
       >
-        <AntDesign name="arrowleft" size={30} color="#fff" />
+        <AntDesign name="arrowleft" size={30} color={colors.fontColor} />
       </TouchableOpacity>
     </View>
   );
@@ -123,7 +118,7 @@ export const AddButton = ({ HandleEvent }) => {
   return (
     <View>
       <TouchableOpacity onPress={HandleEvent} style={{ padding: 10 }}>
-        <Entypo name="add-to-list" size={30} color="#fff" />
+        <Entypo name="add-to-list" size={30} color={colors.fontColor} />
       </TouchableOpacity>
     </View>
   );
@@ -135,6 +130,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   inputLabel: {
-    color: "#fff",
+    color: colors.fontColor,
   },
 });

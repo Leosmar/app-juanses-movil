@@ -6,6 +6,7 @@ import { useIsFocused } from "@react-navigation/native";
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
 
 import DescBuyProduct from "../modal-screen/DescBuyProduct";
+import colors from "../helpers/colors";
 
 const BuyProducts = () => {
   const isFocused = useIsFocused();
@@ -93,6 +94,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemList: {
-    color: "#fff",
+    color: colors.fontColor,
   },
 });

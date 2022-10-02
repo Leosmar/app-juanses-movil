@@ -5,6 +5,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
 import DesOneItem from "../modal-screen/DescOneItem";
+import colors from "../helpers/colors";
 
 const Client = () => {
   const isFocused = useIsFocused();
@@ -78,6 +79,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemList: {
-    color: "#fff",
+    color: colors.fontColor,
   },
 });

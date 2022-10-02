@@ -17,6 +17,9 @@ import Phone from "../screen/Phone";
 import Brand from "../screen/Brand";
 import ControlForm from "../controller/ControlForm";
 import Model from "../screen/Model";
+import OtherProduct from "../screen/OtherProduct";
+import Spent from "../screen/Spent";
+import Sale from "../screen/Sale";
 
 function ManageRouts() {
   const Stack = createNativeStackNavigator();
@@ -30,8 +33,6 @@ function ManageRouts() {
 
   useEffect(() => {
     getData();
-
-    return () => {};
   }, [userLogin]);
 
   return (
@@ -66,6 +67,9 @@ function ManageRouts() {
           <Stack.Screen name="Brand" component={Brand} />
           <Stack.Screen name="Model" component={Model} />
           <Stack.Screen name="Phone" component={Phone} />
+          <Stack.Screen name="Other-product" component={OtherProduct} />
+          <Stack.Screen name="Spent" component={Spent} />
+          <Stack.Screen name="Sale" component={Sale} />
         
         </Stack.Navigator>
       )}

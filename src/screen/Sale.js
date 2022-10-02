@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+
 import React, { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
+
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
-import DesOneItem from "../modal-screen/DescOneItem";
+import DescSpent from "../modal-screen/DescSpent";
 import colors from "../helpers/colors";
 
-const Model = () => {
+const Sale = () => {
   const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
@@ -14,9 +16,7 @@ const Model = () => {
 
   let controlForm = {
     route: "Control-form",
-    screen: "Control-one-item",
-    titleText: "Modelo",
-    dataBaseCol: "model",
+    screen: "Control-sale",
   };
 
   useEffect(() => {
@@ -24,6 +24,18 @@ const Model = () => {
   }, [isFocused]);
 
   const ListItem = ({ item, children }) => {
+
+    const toggleOfbothofthem = {}
+
+    if(item.phoneId){
+        toggleOfbothofthem.brand = item.brand
+        toggleOfbothofthem.model = item.model
+    }
+    if(item.otherproductId){
+         toggleOfbothofthem.otherproductName = item.otherproductName
+    } 
+
+
     return (
       <View>
         <TouchableOpacity
@@ -31,14 +43,37 @@ const Model = () => {
           onPress={() => {
             setData({
               id: item.id,
-              value: item.model,
-              deleteRoute: "delete-model",
-              controlForm: { ...controlForm, putApi: "put-model" },
+              createdAt: item.createdAt,
+              paymentType: item.paymentType,
+              totalValue: JSON.stringify(item.totalValue),
+              phoneId: item.phoneId,
+              clientId: item.clientId,
+              name: item.name,
+              otherproductId: item.otherproductId,
+              deleteRoute: "delete-sale",
+              controlForm,
             });
             setIsVisible(true);
           }}
         >
-          <Text style={styles.itemList}>{item.model}</Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "90%",
+            }}
+          >
+            <Text style={styles.itemList}>{item.id} {item.name}</Text>
+            <Text
+              style={{
+                color: colors.successColor,
+              }}
+            >
+               +{item.totalValue}$
+            </Text>
+          </View>
           <View>{children}</View>
         </TouchableOpacity>
       </View>
@@ -47,27 +82,26 @@ const Model = () => {
 
   return (
     <>
-      <DesOneItem
-        data={data}
+      <DescSpent
         isVisible={isVisible}
         setIsVisible={setIsVisible}
-        updateAfterDelete={updateAfterDelete}
+        data={data}
         setUpdateAfterDelete={setUpdateAfterDelete}
       />
+
       <ContainerSubRoutes
-        controlForm={{ ...controlForm, postApi: "post-model" }}
-        back="Inventory"
-        getRoute="get-model"
-        title="Modelos de telefonos"
+        controlForm={controlForm}
+        getRoute="get-sale"
+        title="Ventas"
         ListItem={ListItem}
-        search="model"
         updateAfterDelete={updateAfterDelete}
-      ></ContainerSubRoutes>
+        search="paymentType"
+      />
     </>
   );
 };
 
-export default Model;
+export default Sale;
 
 const styles = StyleSheet.create({
   itemContainer: {

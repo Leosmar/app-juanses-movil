@@ -15,6 +15,7 @@ import { login } from "../api";
 import Loader from "../components/Loader";
 import { setSession, getSession } from "../helpers/userSession";
 import { FontAwesome5, SimpleLineIcons } from "@expo/vector-icons";
+import colors from "../helpers/colors";
 
 const LoginScreen = () => {
   let placeholderColorText = "rgba(255,255,255, 0.6)";
@@ -32,8 +33,6 @@ const LoginScreen = () => {
 
   useEffect(() => {
     getActiveSession();
-
-    return function cleanUp() {};
   }, []);
 
   const handleSubmit = async (e) => {
@@ -75,7 +74,7 @@ const LoginScreen = () => {
 
           <View style={styles.containerBotton}>
             <View style={styles.inputImg}>
-              <FontAwesome5 name="user" size={24} color="#fff" />
+              <FontAwesome5 name="user" size={24} color={colors.fontColor} />
               <TextInput
                 placeholder="Usuario"
                 placeholderTextColor={placeholderColorText}
@@ -87,7 +86,7 @@ const LoginScreen = () => {
             </View>
 
             <View style={styles.inputImg}>
-              <SimpleLineIcons name="lock" size={24} color="#fff" />
+              <SimpleLineIcons name="lock" size={24} color={colors.fontColor} />
               <TextInput
                 placeholder="Contraseña"
                 placeholderTextColor={placeholderColorText}
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     height: "100%",
     width: "100%",
-    backgroundColor: "#202020",
+    backgroundColor: colors.mainColor,
   },
   logo: {
     width: 230,
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 3.5,
     borderColor: "transparent",
-    borderBottomColor: "#fff",
+    borderBottomColor: colors.fontColor,
     margin: 20,
     width: "70%",
   },
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     width: "80%",
-    color: "#fff",
+    color: colors.fontColor,
   },
   text: {
     padding: 10,

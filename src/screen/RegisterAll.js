@@ -17,6 +17,14 @@ const RegisterAll = () => {
         <ButtonOnPressItem title="Proveedores" to="Provider" />
 
         <ButtonOnPressItem title="Clientes" to="Client" />
+        
+        <ButtonOnPressItem title="Categorias" to="Category" />
+
+        <ButtonOnPressItem title="Pedidos" to="Buy-product" />
+
+        <ButtonOnPressItem title="Marcas de telefonos" to="Brand" />
+
+        <ButtonOnPressItem title="Modelos de telefonos" to="Model" />
       </Layout>
     );
   };

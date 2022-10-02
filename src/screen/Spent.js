@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+
 import React, { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
+
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
-import DesOneItem from "../modal-screen/DescOneItem";
+import DescSpent from "../modal-screen/DescSpent";
 import colors from "../helpers/colors";
 
-const Model = () => {
+const Spent = () => {
   const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
@@ -14,9 +16,7 @@ const Model = () => {
 
   let controlForm = {
     route: "Control-form",
-    screen: "Control-one-item",
-    titleText: "Modelo",
-    dataBaseCol: "model",
+    screen: "Control-spent",
   };
 
   useEffect(() => {
@@ -31,14 +31,33 @@ const Model = () => {
           onPress={() => {
             setData({
               id: item.id,
-              value: item.model,
-              deleteRoute: "delete-model",
-              controlForm: { ...controlForm, putApi: "put-model" },
+              typeSpent: item.typeSpent,
+              totalValue: JSON.stringify(item.totalValue),
+              comment: item.comment,
+              deleteRoute: "delete-spent",
+              controlForm,
             });
             setIsVisible(true);
           }}
         >
-          <Text style={styles.itemList}>{item.model}</Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "90%",
+            }}
+          >
+            <Text style={styles.itemList}>{item.typeSpent}</Text>
+            <Text
+              style={{
+                color: colors.errorColor,
+              }}
+            >
+               -{item.totalValue}$
+            </Text>
+          </View>
           <View>{children}</View>
         </TouchableOpacity>
       </View>
@@ -47,27 +66,26 @@ const Model = () => {
 
   return (
     <>
-      <DesOneItem
-        data={data}
+      <DescSpent
         isVisible={isVisible}
         setIsVisible={setIsVisible}
-        updateAfterDelete={updateAfterDelete}
+        data={data}
         setUpdateAfterDelete={setUpdateAfterDelete}
       />
+
       <ContainerSubRoutes
-        controlForm={{ ...controlForm, postApi: "post-model" }}
-        back="Inventory"
-        getRoute="get-model"
-        title="Modelos de telefonos"
+        controlForm={controlForm}
+        getRoute="get-spent"
+        title="Gastos"
         ListItem={ListItem}
-        search="model"
         updateAfterDelete={updateAfterDelete}
-      ></ContainerSubRoutes>
+        search="typeSpent"
+      />
     </>
   );
 };
 
-export default Model;
+export default Spent;
 
 const styles = StyleSheet.create({
   itemContainer: {

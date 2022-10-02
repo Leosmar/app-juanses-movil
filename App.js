@@ -1,7 +1,7 @@
 import * as React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
-
+import colors from "./src/helpers/colors";
 import ManageRouts from "./src/components/ManageRouts";
 
 const MyTheme = {
@@ -9,9 +9,9 @@ const MyTheme = {
     primary: "",
     background: "",
     boder: "",
-    card: "#202020",
+    card: colors.mainColor,
     notification: "rgb(255, 59, 48)",
-    text: "#fff",
+    text: colors.fontColor,
   },
   dark: false,
 };

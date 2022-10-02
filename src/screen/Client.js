@@ -5,6 +5,7 @@ import { useIsFocused } from "@react-navigation/native";
 
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
 import DescClient from "../modal-screen/DescClient";
+import colors from "../helpers/colors";
 
 const Client = () => {
   const isFocused = useIsFocused();
@@ -61,7 +62,6 @@ const Client = () => {
       />
       <ContainerSubRoutes
         controlForm={controlForm}
-        back="Register"
         getRoute="get-client"
         title="Clientes"
         ListItem={ListItem}
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemList: {
-    color: "#fff",
+    color: colors.fontColor,
   },
 });

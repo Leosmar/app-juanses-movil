@@ -9,6 +9,7 @@ import {
 import React, { useState, useEffect } from "react";
 import DescBtn from "../components/DescBtn";
 import { getData } from "../api";
+import colors from "../helpers/colors";
 const DescBuyProduct = ({
   isVisible,
   setIsVisible,
@@ -105,22 +106,24 @@ const DescBuyProduct = ({
           setUpdateAfterDelete={setUpdateAfterDelete}
         />
 
-        {phoneRegister && <FlatList
-          data={phoneRegister}
-          keyExtractor={(item) => JSON.stringify(item.id)}
-          renderItem={(item) => {
-            return (
-              <>
-                <Text style={[styles.textColor, styles.itemText]}>
-                  {item.item.brand} {item.item.model}
-                </Text>
-                <Text style={[styles.textColor, styles.itemText]}>
-                  {item.item.imei1} {item.item.imei2}
-                </Text>
-              </>
-            );
-          }}
-        />}
+        {phoneRegister && (
+          <FlatList
+            data={phoneRegister}
+            keyExtractor={(item) => JSON.stringify(item.id)}
+            renderItem={(item) => {
+              return (
+                <>
+                  <Text style={[styles.textColor, styles.itemText]}>
+                    {item.item.brand} {item.item.model}
+                  </Text>
+                  <Text style={[styles.textColor, styles.itemText]}>
+                    {item.item.imei1} {item.item.imei2}
+                  </Text>
+                </>
+              );
+            }}
+          />
+        )}
       </View>
     </Modal>
   );
@@ -131,12 +134,12 @@ export default DescBuyProduct;
 const styles = StyleSheet.create({
   container: {
     margin: 35,
-    backgroundColor: "#202020",
+    backgroundColor: colors.mainColor,
     borderRadius: 10,
     padding: 20,
   },
   textColor: {
-    color: "#fff",
+    color: colors.fontColor,
   },
   itemText: {
     fontSize: 16,
