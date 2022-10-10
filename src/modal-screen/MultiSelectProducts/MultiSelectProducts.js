@@ -8,59 +8,36 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import DataEmpityWarning from "../components/DataEmpityWarning";
-import colors from "../helpers/colors";
-
-const MultiSelectModal = ({
-  event,
-  text,
-  inputText,
-  setInputText,
-  items,
+import colors from "../../helpers/colors";
+import { getData } from "../../api";
+import Products from "./Products";
+const MultiSelectProducts = ({
   isVisible,
   setIsVisible,
-  ifItemEmpity,
+  products,
+  setProducts,
 }) => {
-  const [inputFilter, setInputFilter] = useState("");
-
-  const ItemList = (item) => {
-    let nameLoweCase = item?.name.toLowerCase();
-    let textLoweCase = inputFilter.toLowerCase();
-    return (
-      <>
-        {nameLoweCase.indexOf(textLoweCase) != -1 && (
-          <TouchableOpacity
-            style={{
-              backgroundColor: colors.secondColor,
-              width: 500,
-              padding: 10,
-              marginVertical: 10,
-              borderRadius: 5,
-            }}
-            onPress={() => {
-              event(item.id);
-              setInputText(item.name);
-              setIsVisible(false);
-            }}
-          >
-            <Text
-              style={{
-                color: colors.fontColor,
-              }}
-            >
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        )}
-      </>
-    );
+  const [items, setItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [search, setSearch] = useState("");
+  const getProducts = async () => {
+    const res = await getData("get-products-sale");
+    setItems(res);
   };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getSelected = (product) => selectedItems.includes(product.id);
+
+
 
   return (
     <View style={styles.container}>
-      <Text style={styles.inputLabel}>{text}</Text>
+      <Text style={styles.inputLabel}>Selecionar productos</Text>
       <TouchableOpacity
         style={[
           { backgroundColor: colors.secondColor, padding: 8, borderRadius: 5 },
@@ -75,7 +52,9 @@ const MultiSelectModal = ({
             alignItems: "center",
           }}
         >
-          <Text style={styles.inputLabel}>{inputText}</Text>
+          <Text style={styles.inputLabel}>
+            Agrega productos de tu inventario
+          </Text>
           <MaterialIcons
             name="keyboard-arrow-down"
             size={24}
@@ -124,8 +103,8 @@ const MultiSelectModal = ({
               <TextInput
                 placeholder="Buscar"
                 placeholderTextColor="#000"
-                value={inputFilter}
-                onChangeText={setInputFilter}
+                value={search}
+                onChangeText={setSearch}
                 style={{
                   backgroundColor: colors.fontColor,
                   borderColor: "#000",
@@ -141,14 +120,21 @@ const MultiSelectModal = ({
             {items?.length > 0 ? (
               <FlatList
                 data={items}
-                keyExtractor={(item) => JSON.stringify(item.id)}
-                renderItem={(item) => ItemList(item.item)}
+                keyExtractor={(item, index) => `${item.id}${index}`}
+                renderItem={(item) => (
+                  <Products
+                    item={item.item}
+                    selected={getSelected(item.item)}
+                    setSelectedItems={setSelectedItems}
+                    selectedItems={selectedItems}
+                    setProducts={setProducts}
+                    products={products}
+                    search={search}
+                  />
+                )}
               />
             ) : items?.isEmpity === true ? (
-              <DataEmpityWarning
-                message={`No hay ningun ${ifItemEmpity?.text} registrado`}
-                addRoute={ifItemEmpity?.addRoute}
-              />
+              <Text>No hay ningun producto registrado</Text>
             ) : (
               <ActivityIndicator color={colors.fontColor} size="large" />
             )}
@@ -168,5 +154,4 @@ const styles = StyleSheet.create({
     color: colors.fontColor,
   },
 });
-
-export default MultiSelectModal;
+export default MultiSelectProducts;

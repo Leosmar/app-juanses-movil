@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
-import DescSpent from "../modal-screen/DescSpent";
+import DescSale from "../modal-screen/DescSale";
 import colors from "../helpers/colors";
 
 const Sale = () => {
@@ -24,17 +24,16 @@ const Sale = () => {
   }, [isFocused]);
 
   const ListItem = ({ item, children }) => {
+    const product = {};
 
-    const toggleOfbothofthem = {}
-
-    if(item.phoneId){
-        toggleOfbothofthem.brand = item.brand
-        toggleOfbothofthem.model = item.model
+    if (item.phoneId) {
+      product.brand = item.brand;
+      product.model = item.model;
     }
-    if(item.otherproductId){
-         toggleOfbothofthem.otherproductName = item.otherproductName
-    } 
-
+    if (item.otherproductId) {
+      product.otherproductName = item.otherproductName;
+      product.typeProduct = item.typeProduct;
+    }
 
     return (
       <View>
@@ -50,6 +49,7 @@ const Sale = () => {
               clientId: item.clientId,
               name: item.name,
               otherproductId: item.otherproductId,
+              product,
               deleteRoute: "delete-sale",
               controlForm,
             });
@@ -65,13 +65,18 @@ const Sale = () => {
               width: "90%",
             }}
           >
-            <Text style={styles.itemList}>{item.id} {item.name}</Text>
+            <Text style={styles.itemList}>
+              {item.name}{" "}
+              {product?.typeProduct
+                ? `${product?.typeProduct} ${product?.otherproductName}`
+                : `${product?.brand} ${product?.model}`}
+            </Text>
             <Text
               style={{
                 color: colors.successColor,
               }}
             >
-               +{item.totalValue}$
+              +{item.totalValue}$
             </Text>
           </View>
           <View>{children}</View>
@@ -82,7 +87,7 @@ const Sale = () => {
 
   return (
     <>
-      <DescSpent
+      <DescSale
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         data={data}

@@ -41,15 +41,19 @@ const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
             styles.textColor,
           ]}
         >
-          {data.typeSpent}
+          {data.product?.typeProduct
+            ? `${data.product?.typeProduct} ${data.product?.otherproductName}`
+            : `${data.product?.brand} ${data.product?.model}`}
         </Text>
         <Text style={[styles.textColor, styles.itemText]}>
-          Gasto total: {data.totalValue}
+          Cliente: {data.name}
         </Text>
         <Text style={[styles.textColor, styles.itemText]}>
-          Comentario: {data.comment}
+          Total: {data.totalValue}
         </Text>
-        
+        <Text style={[styles.textColor, styles.itemText]}>
+          Metodo de pago: {data.paymentType}
+        </Text>
         <DescBtn
           data={data}
           setIsVisible={setIsVisible}

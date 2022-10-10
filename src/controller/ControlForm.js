@@ -9,6 +9,7 @@ import ControlBuyProduct from "./ControlBuyProduct";
 import ControlPhone from "./ControlPhone";
 import ControlOtherProduct from "./ControlOtherProduct";
 import ControlSpent from "./ControlSpent";
+import ControlSale from "./ControlSale";
 
 const ControlForm = () => {
   const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ const ControlForm = () => {
       <Stack.Screen name="Control-one-item" component={ControlOneItem} />
       <Stack.Screen name="Control-other-product" component={ControlOtherProduct} />
       <Stack.Screen name="Control-spent" component={ControlSpent} />
+      <Stack.Screen name="Control-sale" component={ControlSale} />
 
     </Stack.Navigator>
   );
