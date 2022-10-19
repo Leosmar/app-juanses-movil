@@ -15,7 +15,7 @@ export const useGetMultiSelect = (url, dbColumn, defaultMultiSelectData) => {
 
   useEffect(() => {
     if (isFocused === true) {
-      if (url === "") {
+      if (url === "" && defaultMultiSelectData) {
         setMultiSelect(defaultMultiSelectData);
       } else {
         getDataMultiSelect();

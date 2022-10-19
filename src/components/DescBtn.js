@@ -7,6 +7,7 @@ import { DeleteButton, UpdateButton } from "../components/Inputs";
 
 const DescBtn = ({ data, setIsVisible, setUpdateAfterDelete }) => {
   const navigation = useNavigation();
+  let id = data?.items ? data.items[0].codeSale : data.id;
 
   const handleDelete = async (id) => {
     await deleteData(data.deleteRoute, id);
@@ -17,7 +18,7 @@ const DescBtn = ({ data, setIsVisible, setUpdateAfterDelete }) => {
   return (
     <View style={styles.container}>
       <View style={{ paddingLeft: 10 }}>
-        <DeleteButton HandleEvent={() => handleDelete(data.id)} />
+        <DeleteButton HandleEvent={() => handleDelete(id)} />
       </View>
 
       <UpdateButton

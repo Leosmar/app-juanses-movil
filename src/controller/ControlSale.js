@@ -8,26 +8,46 @@ import Layout from "../components/Layout";
 import { Input, SubmitButton, BackButton } from "../components/Inputs";
 import Title from "../components/Title";
 import MultiSelectProducts from "../modal-screen/MultiSelectProducts/MultiSelectProducts";
+import MultiSelectModal from "../modal-screen/MultiSelectModal";
+import { useGetMultiSelect } from "../hooks/useGetMultiSelect";
+import { useSetProducts } from "../hooks/useSetProducts";
 
 const ControlSale = ({ route }) => {
   const navigation = useNavigation();
   const params = route.params;
   const [loader, setLoader] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
 
-  const [products, setProducts] = useState([]);
-  console.log("original", products);
+  const products = useSetProducts();
+  const client = useGetMultiSelect("get-client", "name");
+  const paymentType = useGetMultiSelect("", {}, [
+    { id: "Efectivo", name: "Efectivo" },
+    { id: "Divisas", name: "Divisas" },
+    { id: "Transferencia", name: "Transferencia" },
+    { id: "Punto de venta", name: "Punto de venta" },
+  ]);
+  console.log("original", products.products);
+
   useEffect(() => {
     if (params) {
+      // get cant and totalValue from api
     }
   }, [params]);
 
   const handleSubmit = async () => {
-    if (false) return Alert.alert("Complete los campos obligatorios");
+    if (!products.products || !paymentType.id || !client.id)
+      return Alert.alert("Complete los campos obligatorios");
     setLoader(true);
 
     if (!params) {
-      const res = await register("post-sale", {}, "Venta");
+      const res = await register(
+        "post-sale",
+        {
+          products: products.products,
+          clientId: client.id,
+          paymentType: paymentType.id,
+        },
+        "Venta"
+      );
 
       res && setloader(false);
       navigation.goBack();
@@ -52,10 +72,34 @@ const ControlSale = ({ route }) => {
       </View>
 
       <MultiSelectProducts
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-        products={products}
-        setProducts={setProducts}
+        isVisible={products.isVisible}
+        setIsVisible={products.setIsVisible}
+        products={products.products}
+        setProducts={products.setProducts}
+      />
+
+      <MultiSelectModal
+        event={client.setId}
+        inputText={client.inputText}
+        setInputText={client.setInputText}
+        isVisible={client.isVisible}
+        setIsVisible={client.setIsVisible}
+        items={client.multiSelect}
+        text="Cliente *"
+        ifItemEmpity={{
+          text: "Cliente",
+          addRoute: "Control-client",
+        }}
+      />
+
+      <MultiSelectModal
+        event={paymentType.setId}
+        inputText={paymentType.inputText}
+        setInputText={paymentType.setInputText}
+        isVisible={paymentType.isVisible}
+        setIsVisible={paymentType.setIsVisible}
+        items={paymentType.multiSelect}
+        text="Metodo de pago *"
       />
 
       <SubmitButton

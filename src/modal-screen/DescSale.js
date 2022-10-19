@@ -4,6 +4,8 @@ import DescBtn from "../components/DescBtn";
 import colors from "../helpers/colors";
 
 const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
+  let paymentType = data.items[0].paymentType || "No encontrado";
+
   return (
     <Modal
       visible={isVisible}
@@ -41,18 +43,45 @@ const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
             styles.textColor,
           ]}
         >
-          {data.product?.typeProduct
-            ? `${data.product?.typeProduct} ${data.product?.otherproductName}`
-            : `${data.product?.brand} ${data.product?.model}`}
+          {data.clientName}
         </Text>
+
+        {data.items.map((product) => {
+          return (
+            <Text
+              key={product.id}
+              style={[
+                styles.itemText,
+                styles.textColor,
+                {
+                  marginLeft: 10,
+                },
+              ]}
+            >
+              {product.product.typeProduct
+                ? `- ${product.product?.typeProduct} ${product.product?.otherproductName}`
+                : `- ${product.product?.brand} ${product.product?.model}`}
+              <Text
+                style={{
+                  color: colors.successColor,
+                }}
+              >{` +${product.totalValue}$`}</Text>
+            </Text>
+          );
+        })}
+
         <Text style={[styles.textColor, styles.itemText]}>
-          Cliente: {data.name}
+          Metodo de pago: {paymentType}
         </Text>
-        <Text style={[styles.textColor, styles.itemText]}>
-          Total: {data.totalValue}
-        </Text>
-        <Text style={[styles.textColor, styles.itemText]}>
-          Metodo de pago: {data.paymentType}
+        <Text
+          style={[
+            styles.itemText,
+            {
+              color: colors.successColor,
+            },
+          ]}
+        >
+          Total: {data.sumTotalValue}$
         </Text>
         <DescBtn
           data={data}

@@ -65,14 +65,12 @@ const ContainerSubRoutes = ({
     let textLoweCase = inputFilter.toLowerCase();
     return (
       <>
-        {searchLoweCase.indexOf(textLoweCase) != -1 ? (
+        {searchLoweCase.indexOf(textLoweCase) != -1 && (
           <View style={styles.itemContainer}>
             <ListItem item={item}>
               <Entypo name="dots-three-horizontal" size={24} color={colors.fontColor} />
             </ListItem>
           </View>
-        ) : (
-          ""
         )}
       </>
     );
@@ -122,7 +120,7 @@ const ContainerSubRoutes = ({
 
       {data.length > 0 ? (
         <FlatList
-          keyExtractor={(item) => JSON.stringify(item.id)}
+          keyExtractor={(item) => JSON.stringify(item.id) ?? item[0].id}
           data={data}
           renderItem={(item) => renderItem(item.item)}
         />

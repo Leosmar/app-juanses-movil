@@ -37,7 +37,7 @@ const MultiSelectProducts = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.inputLabel}>Selecionar productos</Text>
+      <Text style={styles.inputLabel}>Selecionar productos *</Text>
       <TouchableOpacity
         style={[
           { backgroundColor: colors.secondColor, padding: 8, borderRadius: 5 },

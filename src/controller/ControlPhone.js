@@ -52,7 +52,7 @@ const ControlPhone = ({ route }) => {
       buyProduct.setInputText(`${params.nameProvider} #${params.barCode}`);
       brand.setInputText(params.brand);
       model.setInputText(params.model);
-      setStockMultiSelect(params.stock === 1? "Si": "No");
+      setStockMultiSelect(params.stock === 1 ? "Si" : "No");
       setloader(false);
     }
   }, [params]);
@@ -67,7 +67,7 @@ const ControlPhone = ({ route }) => {
       const res = await register(
         "post-phone",
         {
-          buyProductId: buyProduct.id,
+          buyproductId: buyProduct.id,
           brandId: brand.id,
           modelId: model.id,
           color,
@@ -89,7 +89,7 @@ const ControlPhone = ({ route }) => {
         "put-phone",
         {
           id,
-          buyProductId: buyProduct.id,
+          buyproductId: buyProduct.id,
           brandId: brand.id,
           modelId: model.id,
           color,

@@ -125,7 +125,7 @@ export const getData = async (endPoint) => {
     }
   } catch (error) {
     console.log(`Error ${error.err.name} ${error.statusText}`);
-    return 0;
+    return;
   }
 };
 
@@ -142,14 +142,18 @@ export const getDataById = async (endPoint, id) => {
     let json = await res.json();
 
     if (json.error === "false") {
-      return json.data;
+      if (json.data.length < 1) {
+        return { isEmpity: true };
+      } else {
+        return json.data;
+      }
     } else {
       Alert.alert(`Error: ${json.message}`);
       return json.error;
     }
   } catch (error) {
     console.log(`Error ${error.status} ${error.statusText}`);
-    return 0;
+    return;
   }
 };
 

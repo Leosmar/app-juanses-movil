@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Children } from "react";
 import { useIsFocused } from "@react-navigation/native";
 
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
@@ -24,75 +24,71 @@ const Sale = () => {
   }, [isFocused]);
 
   const ListItem = ({ item, children }) => {
-    const product = {};
-
-    if (item.phoneId) {
-      product.brand = item.brand;
-      product.model = item.model;
-    }
-    if (item.otherproductId) {
-      product.otherproductName = item.otherproductName;
-      product.typeProduct = item.typeProduct;
-    }
-
+    let clientName = item[0].name;
+    let sumTotalValue = item.reduce(
+      (partialSum, a) => partialSum + a.totalValue,
+      0
+    );
     return (
-      <View>
-        <TouchableOpacity
-          style={styles.itemContainer}
-          onPress={() => {
-            setData({
-              id: item.id,
-              createdAt: item.createdAt,
-              paymentType: item.paymentType,
-              totalValue: JSON.stringify(item.totalValue),
-              phoneId: item.phoneId,
-              clientId: item.clientId,
-              name: item.name,
-              otherproductId: item.otherproductId,
-              product,
-              deleteRoute: "delete-sale",
-              controlForm,
-            });
-            setIsVisible(true);
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() => {
+          setData({
+            clientName,
+            sumTotalValue,
+            items: item,
+            deleteRoute: "delete-sale",
+            controlForm,
+          });
+          setIsVisible(true);
+        }}
+      >
+        <Text style={styles.itemList}>{clientName} </Text>
+        {item.map((product, i) => {
+          return (
+            <Text
+              key={product.id}
+              style={[
+                styles.itemList,
+                {
+                  marginLeft: 10,
+                },
+              ]}
+            >
+              {i < 2
+                ? product.product.typeProduct
+                  ? `- ${product.product?.typeProduct} ${product.product?.otherproductName}`
+                  : `- ${product.product?.brand} ${product.product?.model}`
+                : "..."}
+              {i < item.length - 1 && ","}
+            </Text>
+          );
+        })}
+        <Text
+          style={{
+            position: "absolute",
+            right: 5,
           }}
         >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "90%",
-            }}
-          >
-            <Text style={styles.itemList}>
-              {item.name}{" "}
-              {product?.typeProduct
-                ? `${product?.typeProduct} ${product?.otherproductName}`
-                : `${product?.brand} ${product?.model}`}
-            </Text>
-            <Text
-              style={{
-                color: colors.successColor,
-              }}
-            >
-              +{item.totalValue}$
-            </Text>
-          </View>
-          <View>{children}</View>
-        </TouchableOpacity>
-      </View>
+          {children}
+        </Text>
+        <Text style={{ color: colors.successColor, paddingTop: 5 }}>
+          Total: +{sumTotalValue}$
+        </Text>
+      </TouchableOpacity>
     );
   };
 
   return (
     <>
-      <DescSale
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-        data={data}
-        setUpdateAfterDelete={setUpdateAfterDelete}
-      />
+      {isVisible && (
+        <DescSale
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          data={data}
+          setUpdateAfterDelete={setUpdateAfterDelete}
+        />
+      )}
 
       <ContainerSubRoutes
         controlForm={controlForm}
@@ -111,11 +107,11 @@ export default Sale;
 const styles = StyleSheet.create({
   itemContainer: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
   },
   itemList: {
     color: colors.fontColor,
+    fontSize: 12,
   },
 });
