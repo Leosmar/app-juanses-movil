@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import colors from "../../helpers/colors";
 import { getData } from "../../api";
@@ -18,10 +18,12 @@ const MultiSelectProducts = ({
   setIsVisible,
   products,
   setProducts,
+  params,
 }) => {
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [search, setSearch] = useState("");
+
   const getProducts = async () => {
     const res = await getData("get-products-sale");
     setItems(res);
@@ -31,9 +33,17 @@ const MultiSelectProducts = ({
     getProducts();
   }, []);
 
+  useLayoutEffect(() => {
+    if (!params) return;
+    let newItems = [];
+    products.map((product, i) => {
+      newItems.push(product.id);
+    });
+
+    setSelectedItems(newItems);
+  }, [products, params]);
+
   const getSelected = (product) => selectedItems.includes(product.id);
-
-
 
   return (
     <View style={styles.container}>

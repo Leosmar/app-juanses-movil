@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import colors from "../../helpers/colors";
 import ModalSetValue from "./ModalSetValue";
 const Products = ({
@@ -30,6 +30,7 @@ const Products = ({
     }
 
     setSelectedItems([...selectedItems, data.id]);
+
     setProducts([
       ...products,
       {
