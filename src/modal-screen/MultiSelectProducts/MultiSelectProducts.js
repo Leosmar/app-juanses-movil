@@ -18,7 +18,8 @@ const MultiSelectProducts = ({
   setIsVisible,
   products,
   setProducts,
-  params,
+  updated,
+  isUpdated,
 }) => {
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -26,22 +27,39 @@ const MultiSelectProducts = ({
 
   const getProducts = async () => {
     const res = await getData("get-products-sale");
-    setItems(res);
+    let filterData;
+
+    if (!updated) {
+      filterData = res.filter(
+        (product) => product?.stock === 1 || product.cant > 0
+      );
+    } else {
+      const productsId = products.map((product) => product.id);
+
+      filterData = res.filter(
+        (product) =>
+          product?.stock === 1 ||
+          product.cant > 0 ||
+          productsId.includes(product.id)
+      );
+    }
+
+    setItems(filterData);
   };
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [isUpdated]);
 
   useLayoutEffect(() => {
-    if (!params) return;
+    if (!updated) return;
     let newItems = [];
     products.map((product, i) => {
       newItems.push(product.id);
     });
 
     setSelectedItems(newItems);
-  }, [products, params]);
+  }, [products, updated]);
 
   const getSelected = (product) => selectedItems.includes(product.id);
 

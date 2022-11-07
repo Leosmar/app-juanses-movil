@@ -16,6 +16,8 @@ const ControlSale = ({ route }) => {
   const navigation = useNavigation();
   const params = route.params;
   const [loader, setLoader] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [updateCodeSale, setUpdateCodeSale] = useState(null);
 
   const products = useSetProducts();
   const client = useGetMultiSelect("get-client", "name");
@@ -33,7 +35,6 @@ const ControlSale = ({ route }) => {
   };
 
   const setProductsToUpdate = async (productsList) => {
-    console.log("Inside the update function");
     const setData = [];
     await Promise.all(
       productsList.map(async (product, i) => {
@@ -52,6 +53,8 @@ const ControlSale = ({ route }) => {
               color: dataById[0].color,
               imei1: dataById[0].imei1,
               imei2: dataById[0].imei2,
+              stock: dataById[0].stock,
+              codeSale: params.codeSale,
             };
             setData.push(data);
           }
@@ -68,6 +71,7 @@ const ControlSale = ({ route }) => {
               cant: dataById[0].cant,
               name: product.product.otherproductName,
               typeProduct: product.product.typeProduct,
+              codeSale: params.codeSale,
             };
 
             setData.push(data);
@@ -76,13 +80,17 @@ const ControlSale = ({ route }) => {
       })
     );
     products.setProducts(setData);
+    setUpdateCodeSale(setData[0]?.codeSale || null);
+    setIsUpdated(true);
   };
 
   useEffect(() => {
     if (!params) return;
-    // get cant and totalValue from api
-    //console.log(params.items);
     setProductsToUpdate(params.items);
+    client.setId(params.items[0].clientId);
+    client.setInputText(params.clientName);
+    paymentType.setId(params.paymentType);
+    paymentType.setInputText(params.paymentType);
   }, [params]);
 
   const handleSubmit = async () => {
@@ -90,25 +98,36 @@ const ControlSale = ({ route }) => {
       return Alert.alert("Complete los campos obligatorios");
     setLoader(true);
 
-    if (!params) {
-      const res = await register(
-        "post-sale",
-        {
-          products: products.products,
-          clientId: client.id,
-          paymentType: paymentType.id,
-        },
-        "Venta"
-      );
-
-      res && setloader(false);
-      navigation.goBack();
-    }
-    if (params) {
-      const res = await update("put-sale", {}, "Venta");
-
-      res && setloader(false);
-      navigation.goBack();
+    try {
+      if (!params) {
+        await register(
+          "post-sale",
+          {
+            products: products.products,
+            clientId: client.id,
+            paymentType: paymentType.id,
+          },
+          "Venta"
+        );
+        navigation.goBack();
+      }
+      if (params) {
+        await register(
+          "put-sale",
+          {
+            products: products.products,
+            clientId: client.id,
+            paymentType: paymentType.id,
+            updateCodeSale,
+          },
+          "Actualizacion"
+        );
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -128,7 +147,8 @@ const ControlSale = ({ route }) => {
         setIsVisible={products.setIsVisible}
         products={products.products}
         setProducts={products.setProducts}
-        params={params}
+        updated={params}
+        isUpdated={isUpdated}
       />
 
       <MultiSelectModal

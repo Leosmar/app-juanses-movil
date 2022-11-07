@@ -25,8 +25,10 @@ const Sale = () => {
 
   const ListItem = ({ item, children }) => {
     let clientName = item[0].name;
+    let paymentType = item[0].paymentType;
+    let codeSale = item[0].codeSale;
     let sumTotalValue = item.reduce(
-      (partialSum, a) => partialSum + a.totalValue,
+      (partialSum, a) => partialSum + a.totalValue * a.saleCant,
       0
     );
     return (
@@ -35,6 +37,8 @@ const Sale = () => {
         onPress={() => {
           setData({
             clientName,
+            paymentType,
+            codeSale,
             sumTotalValue,
             items: item,
             deleteRoute: "delete-sale",
@@ -59,8 +63,8 @@ const Sale = () => {
                 ? product.product.typeProduct
                   ? `- ${product.product?.typeProduct} ${product.product?.otherproductName}`
                   : `- ${product.product?.brand} ${product.product?.model}`
-                : "..."}
-              {i < item.length - 1 && ","}
+                : i === 2 && "..."}
+              {i < 2 && ","}
             </Text>
           );
         })}

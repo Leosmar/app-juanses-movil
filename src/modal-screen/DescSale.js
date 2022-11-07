@@ -4,7 +4,7 @@ import DescBtn from "../components/DescBtn";
 import colors from "../helpers/colors";
 
 const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
-  let paymentType = data.items[0].paymentType || "No encontrado";
+  let paymentType = data.paymentType || "No encontrado";
 
   return (
     <Modal
@@ -59,13 +59,15 @@ const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
               ]}
             >
               {product.product.typeProduct
-                ? `- ${product.product?.typeProduct} ${product.product?.otherproductName}`
+                ? `- ${product.saleCant > 1 ? product.saleCant : ""} ${
+                    product.product?.typeProduct
+                  } ${product.product?.otherproductName}`
                 : `- ${product.product?.brand} ${product.product?.model}`}
               <Text
                 style={{
                   color: colors.successColor,
                 }}
-              >{` +${product.totalValue}$`}</Text>
+              >{` +${product.totalValue * product.saleCant}$`}</Text>
             </Text>
           );
         })}
