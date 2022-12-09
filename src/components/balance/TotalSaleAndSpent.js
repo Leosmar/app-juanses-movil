@@ -39,9 +39,9 @@ const styles = StyleSheet.create({
     color: colors.fontColor,
   },
   titleText: {
-    fontSize: 20,
+    fontSize: 18,
   },
   numberText: {
-    fontSize: 40,
+    fontSize: 30,
   },
 });

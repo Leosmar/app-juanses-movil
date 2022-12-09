@@ -22,6 +22,7 @@ const ControlPhone = ({ route }) => {
     subItem1: "name",
     item2: "barCode",
   });
+
   const brand = useGetMultiSelect("get-brand", "brand");
   const model = useGetMultiSelect("get-model", "model");
   const [color, setColor] = useState("");
@@ -38,7 +39,7 @@ const ControlPhone = ({ route }) => {
   useEffect(() => {
     if (params) {
       setId(params.id);
-      buyProduct.setId(params.buyProductId);
+      buyProduct.setId(params.buyproductId);
       brand.setId(params.brandId);
       model.setId(params.modelId);
       setColor(params.color);
@@ -62,7 +63,6 @@ const ControlPhone = ({ route }) => {
       return Alert.alert("Complete el campo obligatorio");
 
     setloader(true);
-
     if (!params) {
       const res = await register(
         "post-phone",
@@ -80,7 +80,12 @@ const ControlPhone = ({ route }) => {
         },
         "Telefono"
       );
-      res && setloader(false);
+
+      if (res) {
+        setloader(false);
+        return;
+      }
+
       navigation.goBack();
     }
 
@@ -104,7 +109,11 @@ const ControlPhone = ({ route }) => {
         "Telefono"
       );
 
-      res && setloader(false);
+      if (res) {
+        setloader(false);
+        return;
+      }
+
       navigation.goBack();
     }
   };
@@ -242,7 +251,7 @@ const ControlPhone = ({ route }) => {
         )}
 
         <SubmitButton
-          textContent={params ? "Editar" : "Registrar"}
+          textContent={params ? "Guardar" : "Registrar"}
           HandleEvent={handleSubmit}
         />
       </ScrollView>

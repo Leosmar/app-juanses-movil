@@ -100,7 +100,7 @@ const ControlUser = ({ route }) => {
       />
 
       <SubmitButton
-        textContent={params ? "Editar" : "Registrar usuario"}
+        textContent={params ? "Guardar" : "Registrar"}
         HandleEvent={handleSubmit}
       />
     </Layout>

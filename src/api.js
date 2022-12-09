@@ -1,8 +1,6 @@
 import { Alert } from "react-native";
 
-const url =
-  "http://192.168.100.96:3000/api/" ||
-  "https://api-juanses-movil-production.up.railway.app/api/";
+const url = "https://api-juanses-movil-production.up.railway.app/api/";
 
 export const login = async (endPoint, data) => {
   try {
@@ -63,7 +61,7 @@ export const register = async (endPoint, data, comment) => {
       return true;
     }
   } catch (error) {
-    console.log(`Error ${error.status} ${error.statusText}`);
+    console.log(`${error.status} ${error.statusText}`);
     return true;
   }
 };

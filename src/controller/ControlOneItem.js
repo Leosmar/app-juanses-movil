@@ -77,7 +77,7 @@ const ControlOneItem = ({ route }) => {
       />
 
       <SubmitButton
-        textContent={putApi ? "Editar" : "Registrar"}
+        textContent={putApi ? "Guardar" : "Registrar"}
         HandleEvent={handleSubmit}
       />
     </Layout>

@@ -3,7 +3,13 @@ import React from "react";
 import DescBtn from "../components/DescBtn";
 import colors from "../helpers/colors";
 
-const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
+const DescSale = ({
+  isVisible,
+  setIsVisible,
+  data,
+  setUpdateAfterDelete,
+  removeBtn,
+}) => {
   let paymentType = data.paymentType || "No encontrado";
 
   return (
@@ -47,6 +53,7 @@ const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
         </Text>
 
         {data.items.map((product) => {
+          console.log(product);
           return (
             <Text
               key={product.id}
@@ -62,7 +69,8 @@ const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
                 ? `- ${product.saleCant > 1 ? product.saleCant : ""} ${
                     product.product?.typeProduct
                   } ${product.product?.otherproductName}`
-                : `- ${product.product?.brand} ${product.product?.model}`}
+                : `- ${product.product?.brand} ${product.product?.model} 
+    IMEI1:${product.product?.imei1}`}
               <Text
                 style={{
                   color: colors.successColor,
@@ -85,17 +93,21 @@ const DescSpent = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
         >
           Total: {data.sumTotalValue}$
         </Text>
-        <DescBtn
-          data={data}
-          setIsVisible={setIsVisible}
-          setUpdateAfterDelete={setUpdateAfterDelete}
-        />
+        {removeBtn === true ? (
+          ""
+        ) : (
+          <DescBtn
+            data={data}
+            setIsVisible={setIsVisible}
+            setUpdateAfterDelete={setUpdateAfterDelete}
+          />
+        )}
       </View>
     </Modal>
   );
 };
 
-export default DescSpent;
+export default DescSale;
 
 const styles = StyleSheet.create({
   container: {

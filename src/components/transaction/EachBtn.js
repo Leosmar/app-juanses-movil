@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   btn: {
     padding: 15,
     width: "100%",
-    borderRadius: 5,
+    borderRadius: 50,
   },
   text: {
     color: colors.fontColor,

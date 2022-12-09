@@ -4,6 +4,7 @@ import { useIsFocused } from "@react-navigation/native";
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
 import DescPhone from "../modal-screen/DescPhone";
 import colors from "../helpers/colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 const Phone = () => {
   const isFocused = useIsFocused();
@@ -11,6 +12,7 @@ const Phone = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [updateAfterDelete, setUpdateAfterDelete] = useState(false);
   const [data, setData] = useState("");
+  const [getRoute, setGetRoute] = useState("get-phone");
 
   let controlForm = {
     route: "Control-form",
@@ -44,6 +46,25 @@ const Phone = () => {
     );
   };
 
+  const ChangeRoute = () => {
+    return (
+      <View>
+        <TouchableOpacity
+          style={{ marginRight: 10 }}
+          onPress={() =>
+            setGetRoute((oldData) => {
+              oldData === "get-phone"
+                ? setGetRoute("get-phone-sale")
+                : setGetRoute("get-phone");
+            })
+          }
+        >
+          <FontAwesome name="exchange" size={28} color={colors.fontColor} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <>
       <DescPhone
@@ -52,15 +73,20 @@ const Phone = () => {
         setIsVisible={setIsVisible}
         updateAfterDelete={updateAfterDelete}
         setUpdateAfterDelete={setUpdateAfterDelete}
+        removeBtn={getRoute === "get-phone" ? false : true}
       />
+
       <ContainerSubRoutes
         controlForm={controlForm}
         back="Inventory"
-        getRoute="get-phone"
-        title="Telefonos"
+        getRoute={getRoute}
+        title={`Telefonos ${
+          getRoute === "get-phone" ? "disponible" : "Vendidos"
+        }`}
         ListItem={ListItem}
         updateAfterDelete={updateAfterDelete}
         search="model"
+        ChangeRoute={ChangeRoute}
       ></ContainerSubRoutes>
     </>
   );

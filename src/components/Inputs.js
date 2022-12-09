@@ -7,7 +7,12 @@ import {
 } from "react-native";
 import React from "react";
 
-import { AntDesign, Feather, Entypo } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Feather,
+  Entypo,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import colors from "../helpers/colors";
 
 export const Input = ({
@@ -83,6 +88,28 @@ export const DeleteButton = ({ HandleEvent }) => {
   );
 };
 
+export const ReturnBtn = ({ HandleEvent }) => {
+  return (
+    <View>
+      <TouchableOpacity
+        onPress={HandleEvent}
+        style={{
+          backgroundColor: colors.warnningColor,
+          padding: 5,
+          margin: 5,
+          borderRadius: 5,
+        }}
+      >
+        <MaterialCommunityIcons
+          name="cancel"
+          size={24}
+          color={colors.fontColor}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 export const UpdateButton = ({ HandleEvent }) => {
   return (
     <View>
@@ -116,11 +143,26 @@ export const BackButton = ({ HandleEvent }) => {
 
 export const AddButton = ({ HandleEvent }) => {
   return (
-    <View>
-      <TouchableOpacity onPress={HandleEvent} style={{ padding: 10 }}>
-        <Entypo name="add-to-list" size={30} color={colors.fontColor} />
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      onPress={HandleEvent}
+      style={[
+        {
+          padding: 10,
+          position: "absolute",
+          bottom: 30,
+          right: 30,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: colors.blueLigthColor,
+          width: 60,
+          borderRadius: 5,
+          zIndex: 1,
+        },
+      ]}
+    >
+      <Entypo name="add-to-list" size={30} color={colors.fontColor} />
+    </TouchableOpacity>
   );
 };
 

@@ -3,13 +3,14 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { deleteData } from "../api";
 
-import { DeleteButton, UpdateButton } from "../components/Inputs";
+import { DeleteButton, ReturnBtn, UpdateButton } from "../components/Inputs";
 
 const DescBtn = ({ data, setIsVisible, setUpdateAfterDelete }) => {
   const navigation = useNavigation();
+
   let id = data?.items ? data.items[0].codeSale : data.id;
 
-  const handleDelete = async (id) => {
+  const handleDeleteOrReturn = async (id) => {
     await deleteData(data.deleteRoute, id);
     setUpdateAfterDelete(Math.random());
     setIsVisible(false);
@@ -17,18 +18,24 @@ const DescBtn = ({ data, setIsVisible, setUpdateAfterDelete }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ paddingLeft: 10 }}>
-        <DeleteButton HandleEvent={() => handleDelete(id)} />
-      </View>
+      {data.deleteRoute.includes("return") ? (
+        <ReturnBtn HandleEvent={() => handleDeleteOrReturn(id)} />
+      ) : (
+        <>
+          <View style={{ paddingLeft: 10 }}>
+            <DeleteButton HandleEvent={() => handleDeleteOrReturn(id)} />
+          </View>
 
-      <UpdateButton
-        HandleEvent={() =>
-          navigation.navigate(data.controlForm.route, {
-            screen: data.controlForm.screen,
-            params: { ...data },
-          })
-        }
-      />
+          <UpdateButton
+            HandleEvent={() =>
+              navigation.navigate(data.controlForm.route, {
+                screen: data.controlForm.screen,
+                params: { ...data },
+              })
+            }
+          />
+        </>
+      )}
     </View>
   );
 };

@@ -111,7 +111,7 @@ const ControlProvider = ({ route }) => {
       />
 
       <SubmitButton
-        textContent={params ? "Editar" : "Registrar"}
+        textContent={params ? "Guardar" : "Registrar"}
         HandleEvent={handleSubmit}
       />
     </Layout>

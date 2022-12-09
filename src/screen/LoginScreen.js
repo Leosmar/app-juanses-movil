@@ -33,22 +33,29 @@ const LoginScreen = () => {
 
   useEffect(() => {
     getActiveSession();
+    setLoading(false);
   }, []);
 
   const handleSubmit = async (e) => {
-    if (userName === "" || !password)
-      return Alert.alert("Complete todos los campos");
+    try {
+      if (userName === "" || !password)
+        return Alert.alert("Complete todos los campos");
 
-    setLoading(true);
+      setLoading(true);
 
-    const context = await login("login", { userName, password });
+      const context = await login("login", { userName, password });
 
-    if (context) {
-      setUserLogin(context);
-      await setSession(context);
+      if (context) {
+        setUserLogin(context);
+        await setSession(context);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log(`${error.status} ${error.statusText}`);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (

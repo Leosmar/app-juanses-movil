@@ -4,7 +4,13 @@ import React from "react";
 import DescBtn from "../components/DescBtn";
 import colors from "../helpers/colors";
 
-const DesPhone = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
+const DesPhone = ({
+  isVisible,
+  setIsVisible,
+  data,
+  setUpdateAfterDelete,
+  removeBtn = false,
+}) => {
   return (
     <Modal
       visible={isVisible}
@@ -72,11 +78,15 @@ const DesPhone = ({ isVisible, setIsVisible, data, setUpdateAfterDelete }) => {
         <Text style={[styles.textColor, styles.itemText]}>
           Disponibilidad: {data.stock == true ? "Si" : "No"}
         </Text>
-        <DescBtn
-          data={data}
-          setIsVisible={setIsVisible}
-          setUpdateAfterDelete={setUpdateAfterDelete}
-        />
+        {removeBtn === true ? (
+          ""
+        ) : (
+          <DescBtn
+            data={data}
+            setIsVisible={setIsVisible}
+            setUpdateAfterDelete={setUpdateAfterDelete}
+          />
+        )}
       </View>
     </Modal>
   );

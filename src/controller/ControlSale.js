@@ -176,7 +176,7 @@ const ControlSale = ({ route }) => {
       />
 
       <SubmitButton
-        textContent={params ? "Editar" : "Registrar"}
+        textContent={params ? "Guardar" : "Registrar"}
         HandleEvent={handleSubmit}
       />
     </Layout>

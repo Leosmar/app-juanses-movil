@@ -4,12 +4,13 @@ import Layout from "../components/Layout";
 import TotalCashRegister from "../components/balance/TotalCashRegister";
 import TotalSaleAndSpent from "../components/balance/TotalSaleAndSpent";
 import { useBalance } from "../hooks/useBalance";
+import BtnBottom from "../components/transaction/BtnBottom";
 
 const Balance = () => {
   const { total, spent, sale } = useBalance();
   return (
     <Layout>
-      <View style={[styles.container]}>
+      <View style={[styles.containerBalance]}>
         <View style={styles.containerLeft}>
           <TotalCashRegister total={total} />
         </View>
@@ -18,6 +19,7 @@ const Balance = () => {
           <TotalSaleAndSpent value={sale} type="sale" />
         </View>
       </View>
+      <BtnBottom />
     </Layout>
   );
 };
@@ -25,12 +27,12 @@ const Balance = () => {
 export default Balance;
 
 const styles = StyleSheet.create({
-  container: {
+  containerBalance: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    height: "40%",
+    height: "30%",
     width: "100%",
   },
   containerLeft: {

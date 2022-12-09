@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import React, { useEffect } from "react";
 import colors from "../../helpers/colors";
 import { useBtnIsVisible } from "../../hooks/useBtnIsVisible";
@@ -21,7 +21,7 @@ const BtnBottom = () => {
     <View
       style={{
         position: "absolute",
-        bottom: 50,
+        bottom: 25,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
@@ -57,5 +57,3 @@ const BtnBottom = () => {
 };
 
 export default BtnBottom;
-
-const styles = StyleSheet.create({});

@@ -25,6 +25,7 @@ const ContainerSubRoutes = ({
   ListItem,
   updateAfterDelete,
   search,
+  ChangeRoute,
 }) => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -43,7 +44,7 @@ const ContainerSubRoutes = ({
       getApiData();
       setInputFilter("");
     }
-  }, [isFocused]);
+  }, [isFocused, getRoute]);
 
   useEffect(() => {
     if (updateAfterDelete !== true) {
@@ -51,7 +52,7 @@ const ContainerSubRoutes = ({
       setInputFilter("");
       getApiData();
     }
-  }, [updateAfterDelete]);
+  }, [updateAfterDelete, getRoute]);
 
   const renderItem = (item) => {
     let searchLoweCase = "";
@@ -68,7 +69,11 @@ const ContainerSubRoutes = ({
         {searchLoweCase.indexOf(textLoweCase) != -1 && (
           <View style={styles.itemContainer}>
             <ListItem item={item}>
-              <Entypo name="dots-three-horizontal" size={24} color={colors.fontColor} />
+              <Entypo
+                name="dots-three-horizontal"
+                size={24}
+                color={colors.fontColor}
+              />
             </ListItem>
           </View>
         )}
@@ -90,6 +95,7 @@ const ContainerSubRoutes = ({
             alignItems: "center",
           }}
         >
+          {ChangeRoute && <ChangeRoute />}
           <TouchableOpacity
             style={{ marginRight: 10 }}
             onPress={() => setIsVisible(true)}
@@ -102,21 +108,20 @@ const ContainerSubRoutes = ({
               setInputFilter={setInputFilter}
             />
           </TouchableOpacity>
-
-          <AddButton
-            HandleEvent={() =>
-              navigation.navigate(controlForm.route, {
-                screen: controlForm.screen,
-                params:
-                  controlForm.putApi || controlForm.postApi
-                    ? { controlForm }
-                    : undefined,
-              })
-            }
-          />
-          
         </View>
       </View>
+
+      <AddButton
+        HandleEvent={() =>
+          navigation.navigate(controlForm.route, {
+            screen: controlForm.screen,
+            params:
+              controlForm.putApi || controlForm.postApi
+                ? { controlForm }
+                : undefined,
+          })
+        }
+      />
 
       {data.length > 0 ? (
         <FlatList

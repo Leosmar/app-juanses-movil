@@ -126,7 +126,7 @@ const ControlSpent = ({ route }) => {
       />
 
       <SubmitButton
-        textContent={params ? "Editar" : "Agregar"}
+        textContent={params ? "Guardar" : "Registrar"}
         HandleEvent={handleSubmit}
       />
     </Layout>

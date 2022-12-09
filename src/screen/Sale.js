@@ -6,6 +6,7 @@ import { useIsFocused } from "@react-navigation/native";
 import ContainerSubRoutes from "../components/ContainerSubRoutes";
 import DescSale from "../modal-screen/DescSale";
 import colors from "../helpers/colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 const Sale = () => {
   const isFocused = useIsFocused();
@@ -13,6 +14,7 @@ const Sale = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [updateAfterDelete, setUpdateAfterDelete] = useState(true);
   const [data, setData] = useState("");
+  const [getRoute, setGetRoute] = useState("get-sale");
 
   let controlForm = {
     route: "Control-form",
@@ -41,7 +43,7 @@ const Sale = () => {
             codeSale,
             sumTotalValue,
             items: item,
-            deleteRoute: "delete-sale",
+            deleteRoute: "return-sale",
             controlForm,
           });
           setIsVisible(true);
@@ -83,6 +85,25 @@ const Sale = () => {
     );
   };
 
+  const ChangeRoute = () => {
+    return (
+      <View>
+        <TouchableOpacity
+          style={{ marginRight: 10 }}
+          onPress={() =>
+            setGetRoute((oldData) => {
+              oldData === "get-sale"
+                ? setGetRoute("get-cancel-sale")
+                : setGetRoute("get-sale");
+            })
+          }
+        >
+          <FontAwesome name="exchange" size={28} color={colors.fontColor} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <>
       {isVisible && (
@@ -91,16 +112,18 @@ const Sale = () => {
           setIsVisible={setIsVisible}
           data={data}
           setUpdateAfterDelete={setUpdateAfterDelete}
+          removeBtn={getRoute === "get-sale" ? false : true}
         />
       )}
 
       <ContainerSubRoutes
         controlForm={controlForm}
-        getRoute="get-sale"
-        title="Ventas"
+        getRoute={getRoute}
+        title={` Ventas ${getRoute === "get-sale" ? "" : "canceladas"}`}
         ListItem={ListItem}
         updateAfterDelete={updateAfterDelete}
         search="paymentType"
+        ChangeRoute={ChangeRoute}
       />
     </>
   );
