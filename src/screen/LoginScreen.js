@@ -33,7 +33,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     getActiveSession();
-    setLoading(false);
+    if (loading === true) setLoading(false);
   }, []);
 
   const handleSubmit = async (e) => {

@@ -17,7 +17,7 @@ const TotalSaleAndSpent = ({ value, type }) => {
         {type === "sale" ? "Ventas" : "Gastos"} totales
       </Text>
       <Text style={[styles.text, styles.numberText]}>
-        {value ? `${value}$` : <ActivityIndicator />}
+        {value ? `${value}$` : value === 0 ? "0$" : <ActivityIndicator />}
       </Text>
     </View>
   );

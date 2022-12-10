@@ -15,21 +15,25 @@ export const useBalance = () => {
 
   const getTotalSpent = async () => {
     const res = await getData("get-spent");
+    if (res.isEmpity === true) return setSale(0);
     let totalSum = res.reduce((a, b) => {
       return a + b.totalValue;
     }, 0);
-    setSpent(totalSum);
+    return setSpent(totalSum);
   };
 
   const getTotalSale = async () => {
     const res = await getData("get-sale");
+    console.log("----------------->");
+    console.log(res);
+    if (res.isEmpity === true) return setSale(0);
     let totalSum = 0;
     res.map((sale) => {
       totalSum += sale.reduce((a, b) => {
         return a + b.totalValue * b.saleCant;
       }, 0);
     });
-    setSale(totalSum);
+    return setSale(totalSum);
   };
 
   useEffect(() => {

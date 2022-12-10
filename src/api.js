@@ -1,6 +1,8 @@
 import { Alert } from "react-native";
 
-const url = "https://api-juanses-movil-production.up.railway.app/api/";
+const url =
+  // "http://192.168.100.96:3000/api/" ||
+  "https://api-juanses-movil-production.up.railway.app/api/";
 
 export const login = async (endPoint, data) => {
   try {
